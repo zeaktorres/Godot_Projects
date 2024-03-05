@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=3 uid="uid://d02cy6oeij5hs"]
+
+[ext_resource type="PackedScene" uid="uid://8j6b7lv7r6ij" path="res://player.tscn" id="1_iwos5"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_4wfok"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_102oi"]
+size = Vector3(60, 2, 70)
+
+[sub_resource type="BoxMesh" id="BoxMesh_yw414"]
+size = Vector3(60, 2, 60)
+
+[node name="Main" type="Node3D"]
+
+[node name="Ground" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, -1, 0)
+physics_material_override = SubResource("PhysicsMaterial_4wfok")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground"]
+shape = SubResource("BoxShape3D_102oi")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground"]
+mesh = SubResource("BoxMesh_yw414")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-4.37114e-08, -1, -4.77671e-16, 0, -4.77671e-16, 1, -1, 4.37114e-08, 2.08797e-23, 1.05355, 2.71237, -1.3)
+
+[node name="Player" parent="." instance=ExtResource("1_iwos5")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0.9, 0)

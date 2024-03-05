@@ -1,0 +1,25 @@
+[gd_scene load_steps=5 format=3 uid="uid://8j6b7lv7r6ij"]
+
+[ext_resource type="Script" path="res://Player.gd" id="1_77xvq"]
+[ext_resource type="PackedScene" uid="uid://cjmjidst3ld0l" path="res://Animated_Character/GTLF/StylizedCharacter.glb" id="1_objug"]
+[ext_resource type="Script" path="res://Camera_Follow.gd" id="3_jhv6u"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_sknyx"]
+
+[node name="Player" type="CharacterBody3D"]
+script = ExtResource("1_77xvq")
+
+[node name="Pivot" type="Node3D" parent="."]
+
+[node name="Character" parent="Pivot" instance=ExtResource("1_objug")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(2.1, 0, 0, 0, 2.1, 0, 0, 0, 2.1, 0, 0, 0)
+shape = SubResource("SphereShape3D_sknyx")
+
+[node name="Target" type="Node3D" parent="."]
+
+[node name="Camera3D" type="Camera3D" parent="Target"]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 1.22392e-07, 0.9, -1.4)
+script = ExtResource("3_jhv6u")
