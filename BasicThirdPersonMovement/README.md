@@ -1,1 +1,1 @@
-![](https://github.com/zeaktorres/Godot_Projects/ThirdPersonCameraControllerTest)
+![](https://github.com/zeaktorres/Godot_Projects/ThirdPersonCameraControllerTest.gif)
