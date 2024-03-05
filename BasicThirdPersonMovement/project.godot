@@ -10,7 +10,7 @@ config_version=5
 
 [application]
 
-config/name="Spooky_Game"
+config/name="BasicThirdPersonCameraTest"
 run/main_scene="res://Home_Scene.tscn"
 config/features=PackedStringArray("4.2", "GL Compatibility")
 config/icon="res://icon.svg"
