@@ -1,0 +1,70 @@
+[gd_scene load_steps=2 format=3 uid="uid://8j6b7lv7r6ij"]
+
+[ext_resource type="PackedScene" uid="uid://cjmjidst3ld0l" path="res://GLTFS/Animated_Character/GTLF/StylizedCharacter.glb" id="1_objug"]
+
+[node name="Character" instance=ExtResource("1_objug")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
+
+[node name="Skeleton3D" parent="Armature" index="0"]
+bones/3/rotation = Quaternion(0, 0, 0, 1)
+bones/6/rotation = Quaternion(0.415155, 0.082551, -0.470181, 0.774443)
+bones/7/rotation = Quaternion(0.678392, 1.56906e-09, -6.85672e-08, 0.7347)
+bones/8/rotation = Quaternion(0.565761, -2.5671e-11, -1.59933e-08, 0.824569)
+bones/9/rotation = Quaternion(-0.0196474, -0.326108, 0.00732487, 0.9451)
+bones/15/rotation = Quaternion(1.66869e-08, 4.996e-16, -0.450085, 0.892986)
+bones/16/rotation = Quaternion(2.08822e-08, -1.67058e-08, -0.452082, 0.891976)
+bones/18/rotation = Quaternion(-1.32349e-23, 5.82041e-11, 2.79397e-09, 1)
+bones/19/rotation = Quaternion(3.12879e-08, -2.08586e-08, -0.450085, 0.892986)
+bones/20/rotation = Quaternion(3.34116e-08, -8.3529e-09, -0.452082, 0.891976)
+bones/22/rotation = Quaternion(0, 5.82077e-11, 2.79397e-09, 1)
+bones/23/rotation = Quaternion(3.1288e-08, -2.08586e-08, -0.450085, 0.892986)
+bones/24/rotation = Quaternion(3.34116e-08, -8.3529e-09, -0.452082, 0.891976)
+bones/26/rotation = Quaternion(-1.32349e-23, 5.82041e-11, 2.79397e-09, 1)
+bones/27/rotation = Quaternion(3.12879e-08, -2.08586e-08, -0.450085, 0.892986)
+bones/28/rotation = Quaternion(1.25293e-08, 1.67058e-08, -0.452082, 0.891976)
+bones/29/rotation = Quaternion(0, 0, 0, 1)
+bones/32/rotation = Quaternion(0.491834, -0.328766, 0.339278, 0.73137)
+bones/33/rotation = Quaternion(0.485245, -8.62473e-09, 5.42709e-08, 0.874378)
+bones/34/rotation = Quaternion(0.344907, -5.60336e-10, 1.29057e-08, 0.938637)
+bones/35/rotation = Quaternion(0.135688, 0.347597, 0.0849599, 0.923876)
+bones/46/rotation = Quaternion(0, 5.82112e-11, 9.31323e-10, 1)
+bones/50/rotation = Quaternion(0, 5.82112e-11, 9.31323e-10, 1)
+bones/55/rotation = Quaternion(-0.707091, 0.00476058, 0.707091, -0.00476058)
+bones/56/rotation = Quaternion(2.91501e-09, -1.25299e-10, -0.0386747, 0.999252)
+bones/58/rotation = Quaternion(2.91501e-09, 1.2529e-10, 0.0386747, 0.999252)
+bones/60/rotation = Quaternion(0.5, 0.5, -0.5, -0.5)
+bones/61/rotation = Quaternion(4.37723e-08, -6.15118e-09, 0.998671, 0.0515476)
+bones/62/position = Vector3(6.34562, -0.716492, 0.354575)
+bones/62/rotation = Quaternion(0.5, -0.5, 0.5, -0.5)
+bones/63/position = Vector3(0.268968, 5.76583, 1.28263)
+bones/63/rotation = Quaternion(-0.282303, 0.766803, 0.081865, 0.570628)
+bones/65/rotation = Quaternion(0.5, -0.5, 0.5, -0.5)
+bones/66/rotation = Quaternion(-4.37723e-08, -6.15118e-09, 0.998671, -0.0515476)
+bones/67/position = Vector3(-5.74373, 1.09453, 2.01525)
+bones/67/rotation = Quaternion(0.5, 0.5, -0.5, -0.5)
+bones/68/position = Vector3(0.958769, 2.5791, 2.42875)
+bones/68/rotation = Quaternion(0.422646, 0.514608, 0.471149, -0.578419)
+
+[node name="BaseMesh" parent="Armature/Skeleton3D" index="0"]
+layers = 2
+
+[node name="Boots_01" parent="Armature/Skeleton3D" index="1"]
+layers = 2
+
+[node name="Ears" parent="Armature/Skeleton3D" index="2"]
+layers = 2
+
+[node name="Face" parent="Armature/Skeleton3D" index="3"]
+layers = 2
+
+[node name="Hair_01" parent="Armature/Skeleton3D" index="4"]
+layers = 2
+
+[node name="Shirt_01" parent="Armature/Skeleton3D" index="5"]
+layers = 2
+
+[node name="Shorts_01" parent="Armature/Skeleton3D" index="6"]
+layers = 2
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="." index="2"]
+height = 4.01
