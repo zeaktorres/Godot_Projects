@@ -1,6 +1,12 @@
-[gd_scene load_steps=5 format=3 uid="uid://d02cy6oeij5hs"]
+[gd_scene load_steps=9 format=3 uid="uid://d02cy6oeij5hs"]
 
 [ext_resource type="PackedScene" uid="uid://8j6b7lv7r6ij" path="res://player.tscn" id="1_iwos5"]
+[ext_resource type="Script" path="res://Player.gd" id="2_4kcwf"]
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_bshqw"]
+vertices = PackedVector3Array(6.75, 0.5, 0.25, 7.5, 0.5, 0, 7.5, 0.5, -59.5, -60.5, 0.5, -59.5, -60.5, 0.5, 1, -60.5, 0.5, 1, 6.75, 0.75, 1, 6.75, 0.5, 0.25, 8.25, 0.5, 0, 8.5, 0.5, 1, 58.5, 0.5, 1, 58.5, 0.5, -59.5, 7.5, 0.5, -59.5, 7.5, 0.5, -59.5, 7.5, 0.5, 0, 8.25, 0.5, 0, 7.5, 0.5, 59.5, 7.5, 0.5, 2.25, 6.75, 0.5, 2, -60.5, 0.5, 1, -60.5, 0.5, 59.5, 6.75, 0.5, 2, 6.75, 0.75, 1, -60.5, 0.5, 1, 58.5, 0.5, 1, 8.5, 0.5, 1, 8.5, 0.5, 2, 58.5, 0.5, 1, 8.5, 0.5, 2, 7.5, 0.5, 2.25, 7.5, 0.5, 59.5, 58.5, 0.5, 59.5)
+polygons = [PackedInt32Array(1, 0, 2), PackedInt32Array(2, 0, 3), PackedInt32Array(3, 0, 4), PackedInt32Array(7, 6, 5), PackedInt32Array(9, 8, 10), PackedInt32Array(10, 8, 11), PackedInt32Array(11, 8, 12), PackedInt32Array(15, 14, 13), PackedInt32Array(17, 16, 18), PackedInt32Array(18, 16, 20), PackedInt32Array(18, 20, 19), PackedInt32Array(23, 22, 21), PackedInt32Array(26, 25, 24), PackedInt32Array(28, 27, 29), PackedInt32Array(29, 27, 30), PackedInt32Array(30, 27, 31)]
+agent_max_slope = 0.02
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_4wfok"]
 
@@ -8,22 +14,47 @@
 size = Vector3(60, 2, 70)
 
 [sub_resource type="BoxMesh" id="BoxMesh_yw414"]
-size = Vector3(60, 2, 60)
+size = Vector3(120, 2, 120)
+
+[sub_resource type="BoxMesh" id="BoxMesh_f85ci"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_tg0ua"]
 
 [node name="Main" type="Node3D"]
-
-[node name="Ground" type="StaticBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, -1, 0)
-physics_material_override = SubResource("PhysicsMaterial_4wfok")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground"]
-shape = SubResource("BoxShape3D_102oi")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground"]
-mesh = SubResource("BoxMesh_yw414")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-4.37114e-08, -1, -4.77671e-16, 0, -4.77671e-16, 1, -1, 4.37114e-08, 2.08797e-23, 1.05355, 2.71237, -1.3)
 
-[node name="Player" parent="." instance=ExtResource("1_iwos5")]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0.9, 0)
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
+navigation_mesh = SubResource("NavigationMesh_bshqw")
+
+[node name="Ground" type="StaticBody3D" parent="NavigationRegion3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, -1, 0)
+physics_material_override = SubResource("PhysicsMaterial_4wfok")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Ground"]
+shape = SubResource("BoxShape3D_102oi")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/Ground"]
+mesh = SubResource("BoxMesh_yw414")
+
+[node name="Target" type="Node3D" parent="NavigationRegion3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.1338, 0.827181, 0.759201)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/Target"]
+mesh = SubResource("BoxMesh_f85ci")
+
+[node name="Player" type="CharacterBody3D" parent="."]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 1, 0)
+script = ExtResource("2_4kcwf")
+
+[node name="Pivot" type="Node3D" parent="Player"]
+
+[node name="Character" parent="Player/Pivot" instance=ExtResource("1_iwos5")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Player"]
+transform = Transform3D(1.9, 0, 0, 0, 1.9, 0, 0, 0, 1.9, 0, 0, 0)
+shape = SubResource("SphereShape3D_tg0ua")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 12, 17)
