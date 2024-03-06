@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://cjmjidst3ld0l"
-path="res://.godot/imported/StylizedCharacter.glb-82ec752f2e1ab455f71ebfcf643961e9.scn"
+uid="uid://dknf6tm8hq42l"
+path="res://.godot/imported/maxdamage_zombie-low-poly.gltf-1cdb93ec0788dfab58730f47b6aaa852.scn"
 
 [deps]
 
-source_file="res://GLTFS/Animated_Character/GTLF/StylizedCharacter.glb"
-dest_files=["res://.godot/imported/StylizedCharacter.glb-82ec752f2e1ab455f71ebfcf643961e9.scn"]
+source_file="res://GLTFS/Zombie/maxdamage_zombie-low-poly.gltf"
+dest_files=["res://.godot/imported/maxdamage_zombie-low-poly.gltf-1cdb93ec0788dfab58730f47b6aaa852.scn"]
 
 [params]
 
