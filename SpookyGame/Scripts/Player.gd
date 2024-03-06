@@ -18,6 +18,7 @@ func _process(delta):
 	# Get the input direction and handle the movement/deceleration.
 	velocity = Vector3.ZERO
 
+	# Navigation Agent
 	nav_agent.target_position = target.position
 	var next_nav_point = nav_agent.get_next_path_position()
 	var move_to_direction = next_nav_point - global_transform.origin
@@ -26,14 +27,15 @@ func _process(delta):
 	direction = direction.normalized()
 	$Pivot.basis = Basis.looking_at(direction)
 	
-	
 	# TODO: Handle the delta usecase?
 	velocity.x = direction.x * SPEED
 	velocity.z = direction.z * SPEED
-		
+
+	# Stop when reaching goal		
 	if (global_transform.origin.distance_to(target.position) < 1.5):
 		velocity = Vector3.ZERO
-		
+	
+	# Determine what state the player is in
 	animation_tree.set("parameters/conditions/isRunning", getState() == RUNNING)
 	animation_tree.set("parameters/conditions/isWalking", getState() == WALKING)
 	animation_tree.set("parameters/conditions/isIdle", getState() == IDLE)
@@ -50,3 +52,5 @@ func getState():
 		return WALKING
 	else:
 		return RUNNING
+func hit():
+	pass
