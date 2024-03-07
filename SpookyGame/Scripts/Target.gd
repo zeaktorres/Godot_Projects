@@ -5,6 +5,7 @@ extends Node3D
 var rayOrigin = Vector3.ZERO
 var rayEnd = Vector3.ZERO
 @onready var camera = $"../../Camera3D"
+@onready var target = $MeshInstance3D/StaticBody3D
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -14,11 +15,11 @@ func _process(delta):
 	
 	rayOrigin = camera.project_ray_origin(mouse_position)
 	
-	rayEnd = rayOrigin + camera.project_ray_normal(mouse_position) * 2000
-	var query = PhysicsRayQueryParameters3D.create(rayOrigin, rayEnd)
-
+	rayEnd = rayOrigin + camera.project_ray_normal(mouse_position) * 2000	
+	var query = PhysicsRayQueryParameters3D.create(rayOrigin, rayEnd, 4294967295, [target.get_rid()])
+	
 	var intersection = space_state.intersect_ray(query)
 	
 	if not intersection.is_empty() && Input.is_action_pressed("click"):
-		var pos = intersection.position
+		var pos = Vector3(intersection.position.x, 0.5, intersection.position.z)
 		position = pos
