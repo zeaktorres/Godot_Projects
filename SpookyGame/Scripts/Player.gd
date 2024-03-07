@@ -28,7 +28,6 @@ func _process(delta):
 	velocity = (next_nav_point - global_transform.origin).normalized() * SPEED
 	if (nav_agent.is_target_reached()):
 		velocity = Vector3.ZERO
-	print(nav_agent.distance_to_target())
 	
 	# Determine what state the player is in
 	animation_tree.set("parameters/conditions/isRunning", getState() == RUNNING)
@@ -47,5 +46,6 @@ func getState():
 		return WALKING
 	else:
 		return RUNNING
+		
 func hit():
 	pass
