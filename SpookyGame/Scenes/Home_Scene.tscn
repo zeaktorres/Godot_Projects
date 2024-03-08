@@ -1,10 +1,11 @@
-[gd_scene load_steps=12 format=3 uid="uid://d02cy6oeij5hs"]
+[gd_scene load_steps=13 format=3 uid="uid://d02cy6oeij5hs"]
 
 [ext_resource type="Script" path="res://Scenes/Home_Scene.gd" id="1_olrkn"]
 [ext_resource type="Script" path="res://Scripts/Target.gd" id="1_x0ahb"]
 [ext_resource type="Script" path="res://Scripts/Player.gd" id="2_eqot0"]
-[ext_resource type="PackedScene" uid="uid://cve3pfpqkaijf" path="res://Scenes/zombie.tscn" id="2_wogql"]
+[ext_resource type="PackedScene" uid="uid://c5q8mx8ys20tq" path="res://Scenes/zombie.tscn" id="2_wogql"]
 [ext_resource type="PackedScene" uid="uid://v72th6qba4pm" path="res://Scenes/player.tscn" id="2_xtcc1"]
+[ext_resource type="Script" path="res://Scripts/Zombie.gd" id="6_slw5v"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_bshqw"]
 vertices = PackedVector3Array(-43, 0.5, -42, -43, 0.5, 42, 41, 0.5, 42, 41, 0.5, -42)
@@ -62,10 +63,12 @@ shape = SubResource("ConcavePolygonShape3D_k173m")
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 11, 15)
-
-[node name="Zombie" parent="." instance=ExtResource("2_wogql")]
-transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 4.8, 0.8, 1.1)
+current = true
 
 [node name="Player" parent="." instance=ExtResource("2_xtcc1")]
 transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 3, 0.8, 1)
 script = ExtResource("2_eqot0")
+
+[node name="Zombie" parent="." instance=ExtResource("2_wogql")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0.8, 0)
+script = ExtResource("6_slw5v")
