@@ -22,20 +22,28 @@ func _process(delta):
 	velocity = Vector3.ZERO
 
 	# Navigation Agent
+	
+	# Move zombie
 	nav_agent.set_target_position(player.position)
 	var next_nav_point = nav_agent.get_next_path_position()
 	var direction = next_nav_point - global_transform.origin
+	match state_machine.get_current_node():
+		"Attack":
+			animation_tree.advance(delta * 3)
+			pass
+		_:
+			velocity = (next_nav_point - global_transform.origin).normalized() * SPEED
+	
 	look_at(Vector3(player.global_position.x, global_position.y, player.global_position.z), Vector3.UP)
-
-	# Move zombie
-	velocity = (next_nav_point - global_transform.origin).normalized() * SPEED
 	if (nav_agent.is_target_reached()):
 		velocity = Vector3.ZERO
-	
-	# Determine what state the player is in
-	animation_tree.set("parameters/conditions/isRunning", getState() == RUNNING)
-	animation_tree.set("parameters/conditions/isWalking", getState() == WALKING)
-	animation_tree.set("parameters/conditions/isIdle", getState() == IDLE)
+		animation_tree.set("parameters/conditions/isAttacking", true)
+	else:
+		# Determine what state the player is in
+		animation_tree.set("parameters/conditions/isAttacking", false)
+		animation_tree.set("parameters/conditions/isRunning", getState() == RUNNING)
+		animation_tree.set("parameters/conditions/isWalking", getState() == WALKING)
+		animation_tree.set("parameters/conditions/isIdle", getState() == IDLE)
 
 	# Moving the Character
 	move_and_slide()

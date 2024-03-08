@@ -11,6 +11,8 @@ var direction = Vector3.ZERO
 @onready var camera = $"../Camera3D"
 @onready var animation_tree = $AnimationTree
 
+signal player_hit
+
 enum {RUNNING, WALKING, IDLE}
 
 
@@ -48,4 +50,5 @@ func getState():
 		return RUNNING
 		
 func hit():
+	emit_signal("player_hit")
 	pass
