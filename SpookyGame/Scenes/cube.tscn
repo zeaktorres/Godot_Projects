@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://uni0b7x8orvq"]
+
+[ext_resource type="Material" uid="uid://bbr7mmydhvbny" path="res://Orange_x3.tres" id="1_cmaph"]
+
+[node name="Cube" type="Node3D"]
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+material = ExtResource("1_cmaph")

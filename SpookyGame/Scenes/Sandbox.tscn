@@ -4,9 +4,9 @@
 [ext_resource type="Script" path="res://Scripts/Player.gd" id="2_eqot0"]
 [ext_resource type="PackedScene" uid="uid://d1q1x2d35pig3" path="res://Scenes/Target.tscn" id="2_fvtw2"]
 [ext_resource type="PackedScene" uid="uid://v72th6qba4pm" path="res://Scenes/Player.tscn" id="2_xtcc1"]
-[ext_resource type="Script" path="res://Scenes/Camera3D.gd" id="4_uag7s"]
+[ext_resource type="Script" path="res://Scripts/Camera3D.gd" id="4_uag7s"]
 [ext_resource type="PackedScene" uid="uid://bdg8wt7jb7aev" path="res://Scenes/zombie.tscn" id="5_0cx1e"]
-[ext_resource type="PackedScene" uid="uid://bt1e3b0ddr7x6" path="res://clock.tscn" id="6_l14sf"]
+[ext_resource type="PackedScene" uid="uid://bt1e3b0ddr7x6" path="res://Scenes/Clock.tscn" id="7_s6o1l"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_bshqw"]
 vertices = PackedVector3Array(-43, 0.5, -42, -43, 0.5, 42, 41, 0.5, 42, 41, 0.5, -42, -0.986774, 1.75, -0.0125198, -1.01111, 0.5, 1.49177, -1.01244, 0.5, -1.51681, 0.522575, 0.5, -1.50582, 0.498238, 1.75, -0.00152969, 1.98325, 0.5, 0.00945663)
@@ -70,9 +70,10 @@ offset_top = -40.0
 offset_right = 40.0
 grow_vertical = 0
 
-[node name="Clock" parent="Control" instance=ExtResource("6_l14sf")]
+[node name="Clock" parent="Control" instance=ExtResource("7_s6o1l")]
 
 [connection signal="start_timer" from="." to="." method="_on_start_timer"]
-[connection signal="start_timer" from="." to="Control/Clock" method="_on_main_start_timer"]
+[connection signal="start_timer" from="." to="Control/Clock" method="_on_world_start_timer"]
+[connection signal="on_target_pressed" from="NavigationRegion3D/Target" to="." method="_on_target_on_target_pressed"]
 [connection signal="player_hit" from="Player" to="." method="_on_player_player_hit"]
 [connection signal="clock_timer_finished" from="Control/Clock" to="." method="_on_clock_clock_timer_finished"]

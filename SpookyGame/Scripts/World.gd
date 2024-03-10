@@ -5,7 +5,7 @@ signal start_timer
 var zombie = load("res://Scenes/zombie.tscn")
 var instance
 @onready var navigation_region = $NavigationRegion3D
-@export var timer: Clock
+@export var clock: Clock
 var ready_to_spawn = true
 
 # Called when the node enters the scene tree for the first time.
@@ -30,8 +30,6 @@ func _on_target_on_target_pressed(pos):
 		navigation_region.add_child(instance)
 		ready_to_spawn = false
 		emit_signal("start_timer")
-		
-
 
 func _on_clock_clock_timer_finished():
 	ready_to_spawn = true

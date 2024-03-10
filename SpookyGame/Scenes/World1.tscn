@@ -1,0 +1,76 @@
+[gd_scene load_steps=11 format=3 uid="uid://bugujjntax2o2"]
+
+[ext_resource type="Script" path="res://Scripts/World.gd" id="1_kbcnx"]
+[ext_resource type="Script" path="res://Scripts/Camera3D.gd" id="2_21l07"]
+[ext_resource type="PackedScene" uid="uid://d1q1x2d35pig3" path="res://Scenes/Target.tscn" id="3_eavgj"]
+[ext_resource type="PackedScene" uid="uid://v72th6qba4pm" path="res://Scenes/Player.tscn" id="4_a5htx"]
+[ext_resource type="Script" path="res://Scripts/Player.gd" id="5_qc7ky"]
+[ext_resource type="Material" uid="uid://bbr7mmydhvbny" path="res://Orange_x3.tres" id="6_4oh8s"]
+[ext_resource type="MeshLibrary" uid="uid://dfevg3lwe37he" path="res://cube.tres" id="7_loxtq"]
+[ext_resource type="PackedScene" uid="uid://bt1e3b0ddr7x6" path="res://Scenes/Clock.tscn" id="7_x8y3u"]
+[ext_resource type="Script" path="res://Scenes/GridMap.gd" id="8_2jqwb"]
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_upwes"]
+vertices = PackedVector3Array(-3, 1.5, -3, -3, 1.5, 3, 3, 1.5, 3, 3, 1.5, -3)
+polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1)]
+
+[node name="World" type="Node3D"]
+script = ExtResource("1_kbcnx")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(0.866025, -0.25, 0.433013, 0, 0.866025, 0.5, -0.5, -0.433013, 0.75, 8, 11, 11)
+projection = 1
+fov = 120.0
+size = 18.0
+script = ExtResource("2_21l07")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 3, 0)
+
+[node name="Target" parent="." node_paths=PackedStringArray("camera") instance=ExtResource("3_eavgj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.8662, 0.827181, -0.240799)
+camera = NodePath("../Camera3D")
+
+[node name="Player" parent="." instance=ExtResource("4_a5htx")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 1.3, 0)
+script = ExtResource("5_qc7ky")
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+navigation_mesh = SubResource("NavigationMesh_upwes")
+
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="NavigationRegion3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+use_collision = true
+
+[node name="CSGBox3D" type="CSGBox3D" parent="NavigationRegion3D/CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.25, 0, 0)
+size = Vector3(7.5, 1, 7)
+material = ExtResource("6_4oh8s")
+
+[node name="GridMap" type="GridMap" parent="NavigationRegion3D/CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+top_level = true
+mesh_library = ExtResource("7_loxtq")
+cell_size = Vector3(1, 1, 1)
+bake_navigation = true
+data = {
+"cells": PackedInt32Array(65532, 65533, 0, 65533, 65533, 0, 65534, 65533, 0, 65535, 65533, 0, 0, 65533, 0, 1, 65533, 0, 2, 65533, 0, 2, 65534, 0, 2, 65535, 0, 1, 65534, 0, 0, 65534, 0, 65535, 65534, 0, 65534, 65534, 0, 65533, 65534, 0, 65532, 65534, 0, 65532, 65535, 0, 65533, 65535, 0, 65534, 65535, 0, 65535, 65535, 0, 0, 65535, 0, 1, 65535, 0, 2, 0, 0, 1, 0, 0, 0, 0, 0, 65535, 0, 0, 65534, 0, 0, 65533, 0, 0, 65532, 0, 0, 65532, 1, 0, 65533, 1, 0, 65534, 1, 0, 65535, 1, 0, 0, 1, 0, 1, 1, 0, 2, 1, 0, 2, 2, 1441792, 1, 2, 1441792, 0, 2, 1441792, 65535, 2, 1441792, 65534, 2, 1441792, 65533, 2, 1441792, 65532, 2, 1441792)
+}
+script = ExtResource("8_2jqwb")
+metadata/_editor_floor_ = Vector3(0, 0, 0)
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -40.0
+offset_right = 40.0
+grow_vertical = 0
+
+[node name="Clock" parent="Control" instance=ExtResource("7_x8y3u")]
+
+[connection signal="start_timer" from="." to="Control/Clock" method="_on_world_start_timer"]
+[connection signal="on_target_pressed" from="Target" to="." method="_on_target_on_target_pressed"]
+[connection signal="clock_timer_finished" from="Control/Clock" to="." method="_on_clock_clock_timer_finished"]

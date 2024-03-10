@@ -1,0 +1,25 @@
+[gd_scene load_steps=3 format=3 uid="uid://bt1e3b0ddr7x6"]
+
+[ext_resource type="Script" path="res://Scripts/Clock.gd" id="1_4tilt"]
+[ext_resource type="Script" path="res://Scripts/Circle.gd" id="2_eb3np"]
+
+[node name="Clock" type="Node2D" node_paths=PackedStringArray("timer")]
+position = Vector2(400, 0)
+script = ExtResource("1_4tilt")
+timer = NodePath("Timer")
+
+[node name="Circle" type="Node2D" parent="."]
+script = ExtResource("2_eb3np")
+
+[node name="Line2D" type="Line2D" parent="Circle"]
+position = Vector2(0, -200)
+points = PackedVector2Array(0, 0, 0, -200)
+default_color = Color(0, 0, 0, 1)
+
+[node name="LineContainer" type="Node2D" parent="Circle"]
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
