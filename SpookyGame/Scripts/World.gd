@@ -4,7 +4,7 @@ signal start_timer
 
 var zombie = load("res://Scenes/zombie.tscn")
 var instance
-@onready var navigation_region = $NavigationRegion3D
+@onready var navigation_region = $NavigationRegion3D/Zombies
 @export var clock: Clock
 var ready_to_spawn = true
 

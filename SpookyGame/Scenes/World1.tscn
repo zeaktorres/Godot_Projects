@@ -8,7 +8,7 @@
 [ext_resource type="Material" uid="uid://bbr7mmydhvbny" path="res://Orange_x3.tres" id="6_4oh8s"]
 [ext_resource type="MeshLibrary" uid="uid://dfevg3lwe37he" path="res://cube.tres" id="7_loxtq"]
 [ext_resource type="PackedScene" uid="uid://bt1e3b0ddr7x6" path="res://Scenes/Clock.tscn" id="7_x8y3u"]
-[ext_resource type="Script" path="res://Scenes/GridMap.gd" id="8_2jqwb"]
+[ext_resource type="Script" path="res://Scripts/GridMap.gd" id="8_2jqwb"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_upwes"]
 vertices = PackedVector3Array(-3, 1.5, -3, -3, 1.5, 3, 3, 1.5, 3, 3, 1.5, -3)
@@ -31,13 +31,13 @@ transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 3, 
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.8662, 0.827181, -0.240799)
 camera = NodePath("../Camera3D")
 
-[node name="Player" parent="." instance=ExtResource("4_a5htx")]
-transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 1.3, 0)
-script = ExtResource("5_qc7ky")
-
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 navigation_mesh = SubResource("NavigationMesh_upwes")
+
+[node name="Player" parent="NavigationRegion3D" instance=ExtResource("4_a5htx")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 1.8, 0)
+script = ExtResource("5_qc7ky")
 
 [node name="CSGCombiner3D" type="CSGCombiner3D" parent="NavigationRegion3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
@@ -48,14 +48,18 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.25, 0, 0)
 size = Vector3(7.5, 1, 7)
 material = ExtResource("6_4oh8s")
 
-[node name="GridMap" type="GridMap" parent="NavigationRegion3D/CSGCombiner3D"]
+[node name="Zombies" type="Node3D" parent="NavigationRegion3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="GridMap" type="GridMap" parent="NavigationRegion3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 top_level = true
 mesh_library = ExtResource("7_loxtq")
 cell_size = Vector3(1, 1, 1)
-bake_navigation = true
+collision_layer = 0
+collision_mask = 0
 data = {
-"cells": PackedInt32Array(65532, 65533, 0, 65533, 65533, 0, 65534, 65533, 0, 65535, 65533, 0, 0, 65533, 0, 1, 65533, 0, 2, 65533, 0, 2, 65534, 0, 2, 65535, 0, 1, 65534, 0, 0, 65534, 0, 65535, 65534, 0, 65534, 65534, 0, 65533, 65534, 0, 65532, 65534, 0, 65532, 65535, 0, 65533, 65535, 0, 65534, 65535, 0, 65535, 65535, 0, 0, 65535, 0, 1, 65535, 0, 2, 0, 0, 1, 0, 0, 0, 0, 0, 65535, 0, 0, 65534, 0, 0, 65533, 0, 0, 65532, 0, 0, 65532, 1, 0, 65533, 1, 0, 65534, 1, 0, 65535, 1, 0, 0, 1, 0, 1, 1, 0, 2, 1, 0, 2, 2, 1441792, 1, 2, 1441792, 0, 2, 1441792, 65535, 2, 1441792, 65534, 2, 1441792, 65533, 2, 1441792, 65532, 2, 1441792)
+"cells": PackedInt32Array(65535, 65534, 1441793)
 }
 script = ExtResource("8_2jqwb")
 metadata/_editor_floor_ = Vector3(0, 0, 0)

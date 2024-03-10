@@ -63,3 +63,7 @@ func getState():
 func _hit_finished():
 	if (global_position.distance_to(player.global_position) < 1):
 		player.hit()
+
+
+func _on_area_3d_area_entered(area):
+	pass # Replace with function body.
