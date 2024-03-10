@@ -3,10 +3,12 @@ extends CharacterBody3D
 
 
 
-@onready var player = $"../Player"
+var player
+
+# INSIDE OF ZOMBIE
 @onready var nav_agent = $NavigationAgent3D
-@onready var camera = $"../Camera3D"
 @onready var animation_tree = $AnimationTree
+
 @export var SPEED = 3
 
 var direction = Vector3.ZERO
@@ -16,6 +18,7 @@ enum {RUNNING, WALKING, IDLE}
 
 func _ready():
 	state_machine = animation_tree.get("parameters/playback")
+	player = get_node("/root/World").find_child("Player")
 
 func _process(delta):
 	# Get the input direction and handle the movement/deceleration.
@@ -29,7 +32,7 @@ func _process(delta):
 	var direction = next_nav_point - global_transform.origin
 	match state_machine.get_current_node():
 		"Attack":
-			animation_tree.advance(delta * 3)
+			animation_tree.advance(delta * 1.5)
 			pass
 		_:
 			velocity = (next_nav_point - global_transform.origin).normalized() * SPEED
@@ -58,4 +61,5 @@ func getState():
 		return RUNNING
 		
 func _hit_finished():
-	player.hit()
+	if (global_position.distance_to(player.global_position) < 1):
+		player.hit()

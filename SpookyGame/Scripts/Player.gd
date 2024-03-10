@@ -1,4 +1,5 @@
 extends CharacterBody3D
+class_name Player
 
 # How fast the player moves in meters per second.
 @export var SPEED = 4
@@ -6,15 +7,19 @@ extends CharacterBody3D
 var target_velocity = Vector3.ZERO
 var direction = Vector3.ZERO
 
-@onready var target = $"../NavigationRegion3D/Target"
+# INSIDE OF PLAYER
 @onready var nav_agent = $NavigationAgent3D
-@onready var camera = $"../Camera3D"
 @onready var animation_tree = $AnimationTree
+
+# OUTSIDE OF PLAYER
+var target 
 
 signal player_hit
 
 enum {RUNNING, WALKING, IDLE}
 
+func _ready():
+	target = get_node("/root/World").find_child("Target")
 
 func _process(delta):
 	# Get the input direction and handle the movement/deceleration.

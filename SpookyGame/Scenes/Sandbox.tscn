@@ -1,0 +1,78 @@
+[gd_scene load_steps=12 format=3 uid="uid://d02cy6oeij5hs"]
+
+[ext_resource type="Script" path="res://Scripts/World.gd" id="1_olrkn"]
+[ext_resource type="Script" path="res://Scripts/Player.gd" id="2_eqot0"]
+[ext_resource type="PackedScene" uid="uid://d1q1x2d35pig3" path="res://Scenes/Target.tscn" id="2_fvtw2"]
+[ext_resource type="PackedScene" uid="uid://v72th6qba4pm" path="res://Scenes/Player.tscn" id="2_xtcc1"]
+[ext_resource type="Script" path="res://Scenes/Camera3D.gd" id="4_uag7s"]
+[ext_resource type="PackedScene" uid="uid://bdg8wt7jb7aev" path="res://Scenes/zombie.tscn" id="5_0cx1e"]
+[ext_resource type="PackedScene" uid="uid://bt1e3b0ddr7x6" path="res://clock.tscn" id="6_l14sf"]
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_bshqw"]
+vertices = PackedVector3Array(-43, 0.5, -42, -43, 0.5, 42, 41, 0.5, 42, 41, 0.5, -42, -0.986774, 1.75, -0.0125198, -1.01111, 0.5, 1.49177, -1.01244, 0.5, -1.51681, 0.522575, 0.5, -1.50582, 0.498238, 1.75, -0.00152969, 1.98325, 0.5, 0.00945663)
+polygons = [PackedInt32Array(2, 9, 3), PackedInt32Array(3, 7, 0), PackedInt32Array(0, 6, 1), PackedInt32Array(1, 5, 2), PackedInt32Array(9, 7, 3), PackedInt32Array(2, 5, 9), PackedInt32Array(7, 6, 0), PackedInt32Array(6, 5, 1), PackedInt32Array(9, 8, 7), PackedInt32Array(5, 8, 9), PackedInt32Array(7, 4, 6), PackedInt32Array(6, 4, 5), PackedInt32Array(8, 4, 7), PackedInt32Array(5, 4, 8)]
+agent_height = 7.5
+agent_radius = 50.0
+agent_max_climb = 285.82
+agent_max_slope = 64.65
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_4wfok"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_102oi"]
+size = Vector3(60, 2, 70)
+
+[sub_resource type="BoxMesh" id="BoxMesh_yw414"]
+size = Vector3(120, 2, 120)
+
+[node name="Main" type="Node3D"]
+script = ExtResource("1_olrkn")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-4.37114e-08, -1, -4.77671e-16, 0, -4.77671e-16, 1, -1, 4.37114e-08, 2.08797e-23, 1.05355, 2.71237, -1.3)
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
+navigation_mesh = SubResource("NavigationMesh_bshqw")
+
+[node name="Ground" type="StaticBody3D" parent="NavigationRegion3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, -1, 0)
+physics_material_override = SubResource("PhysicsMaterial_4wfok")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Ground"]
+shape = SubResource("BoxShape3D_102oi")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/Ground"]
+mesh = SubResource("BoxMesh_yw414")
+
+[node name="Target" parent="NavigationRegion3D" node_paths=PackedStringArray("camera") instance=ExtResource("2_fvtw2")]
+camera = NodePath("../../Camera3D")
+
+[node name="Zombie" parent="NavigationRegion3D" instance=ExtResource("5_0cx1e")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 1, 14, 12.4)
+projection = 1
+current = true
+size = 30.0
+near = 0.001
+script = ExtResource("4_uag7s")
+
+[node name="Player" parent="." instance=ExtResource("2_xtcc1")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 3, 0.8, 1)
+script = ExtResource("2_eqot0")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -40.0
+offset_right = 40.0
+grow_vertical = 0
+
+[node name="Clock" parent="Control" instance=ExtResource("6_l14sf")]
+
+[connection signal="start_timer" from="." to="." method="_on_start_timer"]
+[connection signal="start_timer" from="." to="Control/Clock" method="_on_main_start_timer"]
+[connection signal="player_hit" from="Player" to="." method="_on_player_player_hit"]
+[connection signal="clock_timer_finished" from="Control/Clock" to="." method="_on_clock_clock_timer_finished"]
