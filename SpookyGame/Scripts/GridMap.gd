@@ -51,5 +51,5 @@ func getFreeCells():
 	for row in cells:
 		for cell in row:
 			if cell.isFree():
-				freeCells.append(cell.getPosition())
+				freeCells.append(cell)
 	return freeCells

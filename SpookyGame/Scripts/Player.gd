@@ -14,6 +14,7 @@ var direction = Vector3.ZERO
 # OUTSIDE OF PLAYER
 var target: Vector3
 var gridMap: GridPath
+var cell: Cell
 var rng = RandomNumberGenerator.new()
 
 signal player_hit
@@ -25,11 +26,29 @@ func _ready():
 
 func getNextPosition() -> Vector3:
 	var freeCells = gridMap.getFreeCells()
-	if freeCells.size() > 0:
+	if cell == null:
 		var randomCell = rng.randi_range(0, freeCells.size() - 1)
-		return Vector3(freeCells[randomCell].x + 0.5, freeCells[randomCell].y, freeCells[randomCell].z + 0.5)
+		cell = freeCells[randomCell]
+		return Vector3(freeCells[randomCell].pos.x + 0.5, freeCells[randomCell].pos.y + 1.5, freeCells[randomCell].pos.z + 0.5)
+	if position.distance_squared_to(cell.pos) > 40:
+		return Vector3(cell.pos.x + 0.5, cell.pos.y + 1.5, cell.pos.z + 0.5)
+		
+	# Find new cell
+	var farthestCellDistance = position.distance_squared_to(cell.pos)
+	var farCells = []
+	if freeCells.size() > 0:
+		for newCell in freeCells:
+			if position.distance_squared_to(newCell.pos) > 40:
+				farCells.append(newCell)
+	
+	if farCells.size() > 0:
+		var randomCell = rng.randi_range(0, farCells.size() - 1)
+		cell = farCells[randomCell]
+		return Vector3(farCells[randomCell].pos.x + 0.5, farCells[randomCell].pos.y + 1.5, farCells[randomCell].pos.z + 0.5)
 	else:
-		return Vector3(0,1.5,0)
+		var randomCell = rng.randi_range(0, freeCells.size() - 1)
+		cell = freeCells[randomCell]
+		return Vector3(freeCells[randomCell].pos.x + 0.5, freeCells[randomCell].pos.y + 1.5, freeCells[randomCell].pos.z + 0.5)
 		
 		
 func changeTarget():

@@ -1,4 +1,4 @@
-[gd_resource type="MeshLibrary" load_steps=12 format=3 uid="uid://dfevg3lwe37he"]
+[gd_resource type="MeshLibrary" load_steps=11 format=3 uid="uid://dfevg3lwe37he"]
 
 [ext_resource type="Material" uid="uid://b4eq5ewiygvom" path="res://green_box.tres" id="1_m6eln"]
 
@@ -32,8 +32,6 @@ data = {
 
 [sub_resource type="ImageTexture" id="ImageTexture_m23s5"]
 image = SubResource("Image_kifr0")
-
-[sub_resource type="BoxMesh" id="BoxMesh_5ohwc"]
 
 [sub_resource type="Image" id="Image_eeylo"]
 data = {
@@ -69,7 +67,6 @@ item/2/navigation_mesh_transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 
 item/2/navigation_layers = 1
 item/2/preview = SubResource("ImageTexture_m23s5")
 item/3/name = "White"
-item/3/mesh = SubResource("BoxMesh_5ohwc")
 item/3/mesh_transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 item/3/shapes = []
 item/3/navigation_mesh_transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
