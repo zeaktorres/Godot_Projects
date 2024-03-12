@@ -15,6 +15,10 @@ run/main_scene="res://Scenes/World1.tscn"
 config/features=PackedStringArray("4.2", "GL Compatibility")
 config/icon="res://icon.svg"
 
+[editor]
+
+movie_writer/movie_file="/home/zeak/Videos/scene.avi"
+
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/godot_vim/plugin.cfg")
