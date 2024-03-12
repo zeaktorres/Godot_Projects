@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://bugujjntax2o2"]
+[gd_scene load_steps=17 format=3 uid="uid://bugujjntax2o2"]
 
 [ext_resource type="Script" path="res://Scripts/World.gd" id="1_kbcnx"]
 [ext_resource type="Script" path="res://Scripts/Camera3D.gd" id="2_21l07"]
@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://bt1e3b0ddr7x6" path="res://Scenes/Clock.tscn" id="7_x8y3u"]
 [ext_resource type="Script" path="res://Scripts/GridMap.gd" id="8_2jqwb"]
 [ext_resource type="Script" path="res://Scripts/HealthBar.gd" id="10_xr656"]
+[ext_resource type="PackedScene" uid="uid://f3syq8bi6npf" path="res://Scenes/Zombie_Head.tscn" id="11_w2c7v"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4wc4c"]
 
@@ -128,6 +129,7 @@ wait_time = 1.5
 autostart = true
 
 [node name="Control" type="Control" parent="."]
+visible = false
 layout_mode = 3
 anchors_preset = 2
 anchor_top = 1.0
@@ -137,6 +139,19 @@ offset_right = 40.0
 grow_vertical = 0
 
 [node name="Clock" parent="Control" instance=ExtResource("7_x8y3u")]
+
+[node name="ZombieHead" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 115.0
+offset_top = -302.0
+offset_right = 155.0
+offset_bottom = -262.0
+grow_vertical = 0
+
+[node name="ZombieHead" parent="ZombieHead" instance=ExtResource("11_w2c7v")]
 
 [connection signal="start_timer" from="." to="Control/Clock" method="_on_world_start_timer"]
 [connection signal="timeout" from="Health/HealthBar/Timer" to="Health/HealthBar" method="_on_timer_timeout"]
