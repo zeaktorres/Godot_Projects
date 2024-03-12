@@ -1,20 +1,19 @@
-[gd_scene load_steps=4 format=3 uid="uid://uni0b7x8orvq"]
+[gd_scene load_steps=5 format=3 uid="uid://uni0b7x8orvq"]
 
-[ext_resource type="Script" path="res://Scenes/Grid.gd" id="1_50lx7"]
+[ext_resource type="Material" uid="uid://b4eq5ewiygvom" path="res://green_box.tres" id="1_lurqa"]
+[ext_resource type="Material" uid="uid://ca1bhn70rxkq8" path="res://white_box.tres" id="1_v53lo"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_gnf2y"]
+material = ExtResource("1_lurqa")
 
 [sub_resource type="BoxMesh" id="BoxMesh_ioc10"]
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_2vahv"]
+material = ExtResource("1_v53lo")
 
 [node name="Cube" type="Node3D"]
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+[node name="Greem" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_gnf2y")
+skeleton = NodePath("../White")
+
+[node name="White" type="MeshInstance3D" parent="."]
 mesh = SubResource("BoxMesh_ioc10")
-
-[node name="Grid" type="Area3D" parent="MeshInstance3D"]
-script = ExtResource("1_50lx7")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/Grid"]
-shape = SubResource("BoxShape3D_2vahv")
-
-[connection signal="body_entered" from="MeshInstance3D/Grid" to="MeshInstance3D/Grid" method="_on_body_entered"]

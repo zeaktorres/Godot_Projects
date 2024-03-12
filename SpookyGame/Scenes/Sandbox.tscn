@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://d1q1x2d35pig3" path="res://Scenes/Target.tscn" id="2_fvtw2"]
 [ext_resource type="PackedScene" uid="uid://v72th6qba4pm" path="res://Scenes/Player.tscn" id="2_xtcc1"]
 [ext_resource type="Script" path="res://Scripts/Camera3D.gd" id="4_uag7s"]
-[ext_resource type="PackedScene" uid="uid://bdg8wt7jb7aev" path="res://Scenes/zombie.tscn" id="5_0cx1e"]
+[ext_resource type="PackedScene" uid="uid://bdg8wt7jb7aev" path="res://Scenes/Zombie.tscn" id="5_0cx1e"]
 [ext_resource type="PackedScene" uid="uid://bt1e3b0ddr7x6" path="res://Scenes/Clock.tscn" id="7_s6o1l"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_bshqw"]

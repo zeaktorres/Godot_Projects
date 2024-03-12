@@ -12,28 +12,42 @@ var direction = Vector3.ZERO
 @onready var animation_tree = $AnimationTree
 
 # OUTSIDE OF PLAYER
-var target 
+var target: Vector3
+var gridMap: GridPath
+var rng = RandomNumberGenerator.new()
 
 signal player_hit
 
 enum {RUNNING, WALKING, IDLE}
 
 func _ready():
-	target = get_node("/root/World").find_child("Target")
+	gridMap = get_node("/root/World/NavigationRegion3D/GridMap")
+
+func getNextPosition() -> Vector3:
+	var freeCells = gridMap.getFreeCells()
+	if freeCells.size() > 0:
+		var randomCell = rng.randi_range(0, freeCells.size() - 1)
+		return Vector3(freeCells[randomCell].x + 0.5, freeCells[randomCell].y, freeCells[randomCell].z + 0.5)
+	else:
+		return Vector3(0,1.5,0)
+		
+		
+func changeTarget():
+	target = getNextPosition()
 
 func _process(delta):
 	# Get the input direction and handle the movement/deceleration.
 	velocity = Vector3.ZERO
-
 	# Navigation Agent
-	nav_agent.set_target_position(target.position)
+	nav_agent.set_target_position(target)
 	var next_nav_point = nav_agent.get_next_path_position()
 	var direction = next_nav_point - global_transform.origin
-	look_at(Vector3(target.global_position.x, global_position.y, target.global_position.z), Vector3.UP)
+	look_at(Vector3(target.x, global_position.y, target.z), Vector3.UP)
 	
 	# TODO: Handle the delta usecase?
 	velocity = (next_nav_point - global_transform.origin).normalized() * SPEED
-	if (nav_agent.is_target_reached()):
+	print(position.distance_squared_to(target))
+	if (nav_agent.is_target_reached() || position.distance_squared_to(target) < 4.2):
 		velocity = Vector3.ZERO
 	
 	# Determine what state the player is in

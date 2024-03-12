@@ -42,7 +42,6 @@ func _process(delta):
 	if (nav_agent.is_target_reached()):
 		intended_velocity = Vector3.ZERO
 		animation_tree.set("parameters/conditions/isAttacking", true)
-		print("Here")
 	else:
 		# Determine what state the player is in
 		animation_tree.set("parameters/conditions/isAttacking", false)
@@ -72,6 +71,7 @@ func _on_area_3d_area_entered(area):
 
 
 func _on_navigation_agent_3d_velocity_computed(safe_velocity):
-	velocity = safe_velocity
-	move_and_slide()
+	if state_machine.get_current_node() != "Attack":
+		velocity = safe_velocity
+		move_and_slide()
 	pass # Replace with function body.

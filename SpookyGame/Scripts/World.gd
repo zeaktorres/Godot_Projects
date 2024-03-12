@@ -2,7 +2,7 @@ extends Node3D
 
 signal start_timer
 
-var zombie = load("res://Scenes/zombie.tscn")
+var zombie = load("res://Scenes/Zombie.tscn")
 var instance
 @onready var navigation_region = $NavigationRegion3D/Zombies
 @export var clock: Clock
