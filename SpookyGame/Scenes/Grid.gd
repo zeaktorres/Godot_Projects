@@ -12,7 +12,6 @@ func _process(delta):
 
 func _physics_process(delta):
 	var zombiesInBlock = []
-	print(get_meshes()[0])
 
 func _on_body_entered(body):
 	print(body)

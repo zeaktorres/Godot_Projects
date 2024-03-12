@@ -45,11 +45,11 @@ func getNextPosition() -> Vector3:
 		var randomCell = rng.randi_range(0, farCells.size() - 1)
 		cell = farCells[randomCell]
 		return Vector3(farCells[randomCell].pos.x + 0.5, farCells[randomCell].pos.y + 1.5, farCells[randomCell].pos.z + 0.5)
-	else:
+	elif freeCells.size() > 0:
 		var randomCell = rng.randi_range(0, freeCells.size() - 1)
 		cell = freeCells[randomCell]
 		return Vector3(freeCells[randomCell].pos.x + 0.5, freeCells[randomCell].pos.y + 1.5, freeCells[randomCell].pos.z + 0.5)
-		
+	return Vector3(cell.pos.x + 0.5, cell.pos.y + 1.5, cell.pos.z + 0.5)
 		
 func changeTarget():
 	target = getNextPosition()
@@ -65,9 +65,9 @@ func _process(delta):
 	
 	# TODO: Handle the delta usecase?
 	velocity = (next_nav_point - global_transform.origin).normalized() * SPEED
-	print(position.distance_squared_to(target))
 	if (nav_agent.is_target_reached() || position.distance_squared_to(target) < 4.2):
 		velocity = Vector3.ZERO
+		target = getNextPosition()
 	
 	# Determine what state the player is in
 	animation_tree.set("parameters/conditions/isRunning", getState() == RUNNING)
