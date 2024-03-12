@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://bfmdai6xunvre"]
+
+[ext_resource type="Material" uid="uid://q0daxtokbfnm" path="res://Scenes/wall_frame.tres" id="1_haqqp"]
+
+[node name="ZeakWall" type="Node3D"]
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.4, 0.350182, -0.195068)
+size = Vector3(0.3, 1, 0.1)
+material = ExtResource("1_haqqp")

@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://dvaacfws4cdgc"]
+
+[ext_resource type="Material" uid="uid://bbr7mmydhvbny" path="res://Orange_x3.tres" id="1_b1on4"]
+[ext_resource type="PackedScene" uid="uid://ev78fbwpkd7v" path="res://Scenes/Door_Modular.tscn" id="2_ho25m"]
+[ext_resource type="PackedScene" uid="uid://d1ea5cmk8mfy7" path="res://Wall1.glb" id="3_le8ue"]
+
+[node name="ZeakHouse" type="Node3D"]
+
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+use_collision = true
+
+[node name="CSGBox3D" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.26196, 4.76837e-07, 0.369989)
+size = Vector3(18, 1, 20)
+material = ExtResource("1_b1on4")
+
+[node name="Door_Modular" parent="CSGCombiner3D" instance=ExtResource("2_ho25m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.4, 1.8, 0)
+
+[node name="Wall1" parent="CSGCombiner3D" instance=ExtResource("3_le8ue")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 2.81541, 2.2831, -2.22844)
