@@ -3,6 +3,7 @@ class_name Player
 
 # How fast the player moves in meters per second.
 @export var SPEED = 4
+@export var health = 100
 
 var target_velocity = Vector3.ZERO
 var direction = Vector3.ZERO
@@ -10,9 +11,11 @@ var direction = Vector3.ZERO
 # INSIDE OF PLAYER
 @onready var nav_agent = $NavigationAgent3D
 @onready var animation_tree = $AnimationTree
+var healthBar: HealthBar
 
 # OUTSIDE OF PLAYER
 var target: Vector3
+var intended_velocity
 var gridMap: GridPath
 var cell: Cell
 var rng = RandomNumberGenerator.new()
@@ -23,6 +26,8 @@ enum {RUNNING, WALKING, IDLE}
 
 func _ready():
 	gridMap = get_node("/root/World/NavigationRegion3D/GridMap")
+	healthBar = get_node("/root/World/Health/HealthBar")
+	healthBar.init_health(health)
 
 func getNextPosition() -> Vector3:
 	var freeCells = gridMap.getFreeCells()
@@ -56,7 +61,7 @@ func changeTarget():
 
 func _process(delta):
 	# Get the input direction and handle the movement/deceleration.
-	velocity = Vector3.ZERO
+	intended_velocity = Vector3.ZERO
 	# Navigation Agent
 	nav_agent.set_target_position(target)
 	var next_nav_point = nav_agent.get_next_path_position()
@@ -88,5 +93,13 @@ func getState():
 		return RUNNING
 		
 func hit():
-	emit_signal("player_hit")
+	health -= 5
+	if health > 0:
+		healthBar.health = health
+	else:
+		healthBar.health = 0
 	pass
+	
+func _on_navigation_agent_3d_velocity_computed(safe_velocity):
+	velocity = safe_velocity
+	move_and_slide()

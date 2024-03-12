@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://bugujjntax2o2"]
+[gd_scene load_steps=16 format=3 uid="uid://bugujjntax2o2"]
 
 [ext_resource type="Script" path="res://Scripts/World.gd" id="1_kbcnx"]
 [ext_resource type="Script" path="res://Scripts/Camera3D.gd" id="2_21l07"]
@@ -9,6 +9,24 @@
 [ext_resource type="MeshLibrary" uid="uid://dfevg3lwe37he" path="res://cube.tres" id="7_loxtq"]
 [ext_resource type="PackedScene" uid="uid://bt1e3b0ddr7x6" path="res://Scenes/Clock.tscn" id="7_x8y3u"]
 [ext_resource type="Script" path="res://Scripts/GridMap.gd" id="8_2jqwb"]
+[ext_resource type="Script" path="res://Scripts/HealthBar.gd" id="10_xr656"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4wc4c"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_l5cnn"]
+bg_color = Color(0.215686, 0.54902, 0.478431, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kc20v"]
+bg_color = Color(0.0941176, 0.0941176, 0.0941176, 1)
+expand_margin_left = 1.0
+expand_margin_top = 1.0
+expand_margin_right = 1.0
+expand_margin_bottom = 1.0
+shadow_color = Color(0, 0, 0, 0.27451)
+shadow_offset = Vector2(0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dlt3w"]
+bg_color = Color(1, 1, 1, 1)
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_upwes"]
 vertices = PackedVector3Array(-7.25, 1.5, 0.1, -1.75, 1.5, 0.1, -1.5, 1.5, -0.65, 0, 1.5, -9.15, -7.25, 1.5, -9.15, -1.5, 1.5, -0.65, 0, 1.5, -0.65, 0, 1.5, -9.15, 1.5, 1.5, -0.65, 1.75, 1.5, 0.1, 9.75, 1.5, 0.1, 9.75, 1.5, -9.15, 0, 1.5, -9.15, 0, 1.5, -9.15, 0, 1.5, -0.65, 1.5, 1.5, -0.65, -1.5, 1.5, 0.6, -1.75, 1.5, 0.1, -7.25, 1.5, 0.1, 0, 1.5, 0.85, -1.5, 1.5, 0.6, -7.25, 1.5, 0.1, -7.25, 1.5, 9.85, 0, 1.5, 9.85, 9.75, 1.5, 0.1, 1.75, 1.5, 0.1, 1.5, 1.5, 0.6, 1.5, 1.5, 0.6, 0, 1.5, 0.85, 0, 1.5, 9.85, 9.75, 1.5, 9.85, 9.75, 1.5, 0.1)
@@ -16,6 +34,44 @@ polygons = [PackedInt32Array(1, 0, 2), PackedInt32Array(2, 0, 4), PackedInt32Arr
 
 [node name="World" type="Node3D"]
 script = ExtResource("1_kbcnx")
+
+[node name="Health" type="Control" parent="."]
+layout_direction = 2
+layout_mode = 3
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+grow_horizontal = 2
+
+[node name="HealthBar" type="ProgressBar" parent="Health"]
+z_index = 1
+custom_minimum_size = Vector2(1200, 50)
+layout_mode = 1
+offset_left = -600.0
+offset_top = 80.0
+offset_right = 600.0
+offset_bottom = 130.0
+theme_override_styles/background = SubResource("StyleBoxEmpty_4wc4c")
+theme_override_styles/fill = SubResource("StyleBoxFlat_l5cnn")
+value = 60.0
+script = ExtResource("10_xr656")
+
+[node name="DamageBar" type="ProgressBar" parent="Health/HealthBar"]
+z_index = -1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_kc20v")
+theme_override_styles/fill = SubResource("StyleBoxFlat_dlt3w")
+value = 80.0
+show_percentage = false
+
+[node name="Timer" type="Timer" parent="Health/HealthBar"]
+wait_time = 0.4
+one_shot = true
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(0.866025, -0.25, 0.433013, 0, 0.866025, 0.5, -0.5, -0.433013, 0.75, 8, 11, 11)
@@ -83,6 +139,7 @@ grow_vertical = 0
 [node name="Clock" parent="Control" instance=ExtResource("7_x8y3u")]
 
 [connection signal="start_timer" from="." to="Control/Clock" method="_on_world_start_timer"]
+[connection signal="timeout" from="Health/HealthBar/Timer" to="Health/HealthBar" method="_on_timer_timeout"]
 [connection signal="on_target_pressed" from="Target" to="." method="_on_target_on_target_pressed"]
 [connection signal="timeout" from="NavigationRegion3D/ChangeSafeZone" to="NavigationRegion3D/Player" method="changeTarget"]
 [connection signal="clock_timer_finished" from="Control/Clock" to="." method="_on_clock_clock_timer_finished"]

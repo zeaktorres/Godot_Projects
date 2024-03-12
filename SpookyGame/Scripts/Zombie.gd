@@ -65,13 +65,13 @@ func _hit_finished():
 	if (global_position.distance_to(player.global_position) < 1):
 		player.hit()
 
-
-func _on_area_3d_area_entered(area):
-	pass # Replace with function body.
+func _arm_hit(body: Player):
+	if state_machine.get_current_node() == "Attack":
+		body.hit()
+	pass
 
 
 func _on_navigation_agent_3d_velocity_computed(safe_velocity):
 	if state_machine.get_current_node() != "Attack":
 		velocity = safe_velocity
 		move_and_slide()
-	pass # Replace with function body.

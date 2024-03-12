@@ -11,4 +11,5 @@ Zombie Model:
 Grid Textures:
 https://www.kenney.nl/assets/prototype-textures
 
-	
+Health Bar:
+https://www.youtube.com/watch?v=f90ieBOoIYQ&ab_channel=DashNothing
