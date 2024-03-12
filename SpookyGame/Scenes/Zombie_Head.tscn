@@ -5,21 +5,20 @@
 
 [node name="ZombieHead" type="Node2D"]
 
-[node name="ZombieHead-removebg-preview" type="Sprite2D" parent="."]
+[node name="ZombieHeadSprite" type="Sprite2D" parent="."]
 position = Vector2(62, 131)
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("1_pnope")
 
-[node name="Label" type="Label" parent="."]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 28.0
-offset_top = 3.0
-offset_right = 63.0
-offset_bottom = 26.0
+[node name="Label" type="Label" parent="ZombieHeadSprite"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -356.0
+offset_top = -300.0
+offset_right = -35.0
+offset_bottom = -119.0
 grow_horizontal = 2
-grow_vertical = 2
-scale = Vector2(2.2, 2.2)
 theme_override_fonts/font = ExtResource("2_8wr7a")
+theme_override_font_sizes/font_size = 150
 text = "300"

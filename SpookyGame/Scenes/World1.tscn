@@ -153,8 +153,11 @@ grow_vertical = 0
 
 [node name="ZombieHead" parent="ZombieHead" instance=ExtResource("11_w2c7v")]
 
-[connection signal="start_timer" from="." to="Control/Clock" method="_on_world_start_timer"]
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.09
+
 [connection signal="timeout" from="Health/HealthBar/Timer" to="Health/HealthBar" method="_on_timer_timeout"]
 [connection signal="on_target_pressed" from="Target" to="." method="_on_target_on_target_pressed"]
 [connection signal="timeout" from="NavigationRegion3D/ChangeSafeZone" to="NavigationRegion3D/Player" method="changeTarget"]
 [connection signal="clock_timer_finished" from="Control/Clock" to="." method="_on_clock_clock_timer_finished"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
