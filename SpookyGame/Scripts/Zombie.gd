@@ -1,21 +1,27 @@
 extends CharacterBody3D
-
+class_name Zombie
 
 
 
 var player
 
 # INSIDE OF ZOMBIE
-@onready var nav_agent = $NavigationAgent3D
+@onready var nav_agent: NavigationAgent3D = $NavigationAgent3D
 @onready var animation_tree = $AnimationTree
 
-@export var SPEED = 3
+var speed = 3: set = _set_speed
 
 var direction = Vector3.ZERO
 var state_machine
 var intended_velocity
 
 enum {RUNNING, WALKING, IDLE}
+
+func _set_speed(newSpeed):
+	$NavigationAgent3D.max_speed = newSpeed
+	$NavigationAgent3D.target_desired_distance *= scale.x
+	print($NavigationAgent3D.target_desired_distance)
+	speed = newSpeed
 
 func _ready():
 	state_machine = animation_tree.get("parameters/playback")
@@ -26,7 +32,7 @@ func _process(delta):
 	velocity = Vector3.ZERO
 
 	# Move zombie
-	nav_agent.set_target_position(player.position)
+	nav_agent.set_target_position(Vector3(player.position.x, position.y, player.position.z))
 	var next_nav_point = nav_agent.get_next_path_position()
 	var direction = next_nav_point - global_transform.origin
 	match state_machine.get_current_node():
@@ -34,7 +40,7 @@ func _process(delta):
 			animation_tree.advance(delta * 1.5)
 			pass
 		_:
-			intended_velocity = (next_nav_point - global_transform.origin).normalized() * SPEED
+			intended_velocity = (next_nav_point - global_transform.origin).normalized() * speed
 			nav_agent.set_velocity(intended_velocity)
 	
 	look_at(Vector3(player.global_position.x, global_position.y, player.global_position.z), Vector3.UP)
@@ -65,7 +71,9 @@ func _hit_finished():
 	if (global_position.distance_to(player.global_position) < 1):
 		player.hit()
 
-func _arm_hit(body: Player):
+func _arm_hit(body):
+	if body.name != "Player":
+		return
 	if state_machine.get_current_node() == "Attack":
 		body.hit()
 	pass

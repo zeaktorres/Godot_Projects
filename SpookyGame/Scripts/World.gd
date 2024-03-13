@@ -1,13 +1,22 @@
 extends Node3D
-
+class_name World
 @onready var timer = $Timer
 var zombie = load("res://Scenes/Zombie.tscn")
 @onready var ZombieHeadScreen: Label = $ZombieHead/ZombieHead/ZombieHeadSprite/Label
 @export var zombiesLeft = 20
-var instance
+var instance: Zombie
 @onready var navigation_region = $NavigationRegion3D/Zombies
 @export var clock: Clock
 var ready_to_spawn = true
+var wave: Wave
+
+
+func initWorld(newWave):
+	wave = newWave
+	zombiesLeft = wave.zombiePowerUps.zombieCount
+	$Health/Wave_Count.text = "WAVE " + str(wave.number + 1)
+	pass
+	
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -27,7 +36,9 @@ func _on_player_player_hit():
 func _on_target_on_target_pressed(pos):
 	if zombiesLeft > 0 && ready_to_spawn:
 		instance = zombie.instantiate()
-		instance.position = pos
+		instance.scale = instance.scale * wave.zombiePowerUps.size
+		instance.speed = wave.zombiePowerUps.speed
+		instance.position = Vector3(pos.x , pos.y * (wave.zombiePowerUps.size), pos.z)
 		navigation_region.add_child(instance)
 		zombiesLeft -= 1
 		ZombieHeadScreen.text = str(zombiesLeft)

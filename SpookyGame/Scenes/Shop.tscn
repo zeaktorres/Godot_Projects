@@ -1,15 +1,42 @@
-[gd_scene format=3 uid="uid://dt554g84x5hqf"]
+[gd_scene load_steps=3 format=3 uid="uid://dt554g84x5hqf"]
 
-[node name="Shop" type="Node2D"]
+[ext_resource type="FontFile" uid="uid://dhwew6ugyhi4d" path="res://Xolonium-Regular.ttf" id="1_c1xis"]
+[ext_resource type="Script" path="res://Scenes/Shop.gd" id="1_trlmc"]
 
-[node name="Control" type="Control" parent="."]
-layout_mode = 3
+[node name="Shop" type="HBoxContainer"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_trlmc")
 
-[node name="GridContainer" type="GridContainer" parent="."]
-offset_right = 40.0
-offset_bottom = 40.0
+[node name="Control" type="Control" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ItemList" type="ItemList" parent="Control"]
+clip_contents = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0972222
+anchor_top = 0.29321
+anchor_right = 0.922743
+anchor_bottom = 0.478395
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+tooltip_text = "TEST"
+theme_override_fonts/font = ExtResource("1_c1xis")
+theme_override_font_sizes/font_size = 100
+allow_search = false
+icon_mode = 0
+metadata/_edit_use_anchors_ = true
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.1
+autostart = true
+
+[connection signal="item_clicked" from="Control/ItemList" to="." method="_on_item_list_item_clicked"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

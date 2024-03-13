@@ -27,10 +27,14 @@ signal player_hit
 
 enum {RUNNING, WALKING, IDLE}
 
+func setupHealth(newHealth):
+	health = newHealth
+	healthBar.init_health(health)
+
 func _ready():
 	gridMap = get_node("/root/LevelPicker/World/NavigationRegion3D/GridMap")
 	healthBar = get_node("/root/LevelPicker/World/Health/HealthBar")
-	healthBar.init_health(health)
+	
 
 func getNextPosition() -> Vector3:
 	var freeCells = gridMap.getFreeCells()
@@ -84,6 +88,7 @@ func getState():
 		return RUNNING
 		
 func hit():
+	print(health)
 	health -= 5
 	if health > 0:
 		healthBar.health = health

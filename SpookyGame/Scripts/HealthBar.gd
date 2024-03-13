@@ -21,9 +21,11 @@ func _set_health(new_health):
 		damage_bar.value = health
 
 func init_health(_health):
+	max_value = _health
 	health = _health
-	max_value = health
 	value = health
+	damage_bar.max_value = health
+	damage_bar.value = health
 	
 
 # Called when the node enters the scene tree for the first time.

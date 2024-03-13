@@ -1,8 +1,9 @@
-[gd_scene load_steps=17 format=3 uid="uid://bugujjntax2o2"]
+[gd_scene load_steps=18 format=3 uid="uid://bugujjntax2o2"]
 
 [ext_resource type="Script" path="res://Scripts/World.gd" id="1_kbcnx"]
 [ext_resource type="Script" path="res://Scripts/Camera3D.gd" id="2_21l07"]
 [ext_resource type="PackedScene" uid="uid://d1q1x2d35pig3" path="res://Scenes/Target.tscn" id="3_eavgj"]
+[ext_resource type="FontFile" uid="uid://dhwew6ugyhi4d" path="res://Xolonium-Regular.ttf" id="3_xfa2p"]
 [ext_resource type="PackedScene" uid="uid://v72th6qba4pm" path="res://Scenes/Player.tscn" id="4_a5htx"]
 [ext_resource type="MeshLibrary" uid="uid://dfevg3lwe37he" path="res://cube.tres" id="7_loxtq"]
 [ext_resource type="Texture2D" uid="uid://cqoj5ln2cvmrn" path="res://Grid_Textures/PNG/Dark/texture_01.png" id="7_rx4en"]
@@ -75,6 +76,23 @@ show_percentage = false
 [node name="Timer" type="Timer" parent="Health/HealthBar"]
 wait_time = 0.4
 one_shot = true
+
+[node name="Wave_Count" type="Label" parent="Health"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -67.0
+offset_top = 14.0
+offset_right = 78.0
+offset_bottom = 63.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("3_xfa2p")
+theme_override_font_sizes/font_size = 40
+text = "WAVE "
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(0.866025, -0.321394, 0.383022, 0, 0.766044, 0.642788, -0.5, -0.55667, 0.663414, 8, 11, 11)
