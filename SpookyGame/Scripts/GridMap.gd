@@ -24,7 +24,7 @@ func createNewBox(pos, id) -> Cell:
 	var box_mesh = BoxMesh.new()
 	box_mesh_instance.mesh = box_mesh
 	area_instance.position = Vector3(pos[0] + 0.5, pos[1] + 1.5, pos[2] + 0.5)
-	area_instance.add_child(box_mesh_instance)
+	#area_instance.add_child(box_mesh_instance)
 	area_instance.set_script(area3DScript)
 	area_instance.set_collision_layer(2)
 	area_instance.set_collision_mask(2)

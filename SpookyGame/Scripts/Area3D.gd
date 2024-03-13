@@ -10,16 +10,18 @@ var cell: Cell
 func _ready():
 	connect("body_entered", body_entered)
 	connect("body_exited", body_exited)
-	mesh = get_child(0)
+	#mesh = get_child(0)
 	pass # Replace with function body.
 	
 func body_entered(body):
-	mesh.set_surface_override_material(0, greenMaterial)
+	#mesh.set_surface_override_material(0, greenMaterial)
 	cell.isTaken = true
 	pass	
 
 func body_exited(body):
-	mesh.set_surface_override_material(0, whiteMaterial)
+	#mesh.set_surface_override_material(0, whiteMaterial)
+	cell.isTaken = false
+	pass
 	
 func setCell(newCell):
 	cell = newCell

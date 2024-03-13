@@ -31,30 +31,34 @@ func _ready():
 
 func getNextPosition() -> Vector3:
 	var freeCells = gridMap.getFreeCells()
-	if cell == null:
-		var randomCell = rng.randi_range(0, freeCells.size() - 1)
-		cell = freeCells[randomCell]
-		return Vector3(freeCells[randomCell].pos.x + 0.5, freeCells[randomCell].pos.y + 1.5, freeCells[randomCell].pos.z + 0.5)
-	if position.distance_squared_to(cell.pos) > 40:
-		return Vector3(cell.pos.x + 0.5, cell.pos.y + 1.5, cell.pos.z + 0.5)
+	var randomCell = rng.randi_range(0, freeCells.size() - 1)
+	cell = freeCells[randomCell]
+	var rayOrigin = global_position
+	var space_state = get_world_3d().direct_space_state 
+	
+	var rayEnd = Vector3(freeCells[randomCell].pos.x + 0.5, freeCells[randomCell].pos.y + 1.5, freeCells[randomCell].pos.z + 0.5)
+	var query = PhysicsRayQueryParameters3D.create(rayOrigin, rayEnd)
+	var intersection = space_state.intersect_ray(query)
+	
+	return Vector3(freeCells[randomCell].pos.x + 0.5, freeCells[randomCell].pos.y + 1.5, freeCells[randomCell].pos.z + 0.5)
 		
 	# Find new cell
-	var farthestCellDistance = position.distance_squared_to(cell.pos)
-	var farCells = []
-	if freeCells.size() > 0:
-		for newCell in freeCells:
-			if position.distance_squared_to(newCell.pos) > 40:
-				farCells.append(newCell)
-	
-	if farCells.size() > 0:
-		var randomCell = rng.randi_range(0, farCells.size() - 1)
-		cell = farCells[randomCell]
-		return Vector3(farCells[randomCell].pos.x + 0.5, farCells[randomCell].pos.y + 1.5, farCells[randomCell].pos.z + 0.5)
-	elif freeCells.size() > 0:
-		var randomCell = rng.randi_range(0, freeCells.size() - 1)
-		cell = freeCells[randomCell]
-		return Vector3(freeCells[randomCell].pos.x + 0.5, freeCells[randomCell].pos.y + 1.5, freeCells[randomCell].pos.z + 0.5)
-	return Vector3(cell.pos.x + 0.5, cell.pos.y + 1.5, cell.pos.z + 0.5)
+	#var farthestCellDistance = position.distance_squared_to(cell.pos)
+	#var farCells = []
+	#if freeCells.size() > 0:
+		#for newCell in freeCells:
+			#if position.distance_squared_to(newCell.pos) > 40:
+				#farCells.append(newCell)
+	#
+	#if farCells.size() > 0:
+		#var randomCell = rng.randi_range(0, farCells.size() - 1)
+		#cell = farCells[randomCell]
+		#return Vector3(farCells[randomCell].pos.x + 0.5, farCells[randomCell].pos.y + 1.5, farCells[randomCell].pos.z + 0.5)
+	#elif freeCells.size() > 0:
+		#var randomCell = rng.randi_range(0, freeCells.size() - 1)
+		#cell = freeCells[randomCell]
+		#return Vector3(freeCells[randomCell].pos.x + 0.5, freeCells[randomCell].pos.y + 1.5, freeCells[randomCell].pos.z + 0.5)
+	#return Vector3(cell.pos.x + 0.5, cell.pos.y + 1.5, cell.pos.z + 0.5)
 		
 func changeTarget():
 	target = getNextPosition()
