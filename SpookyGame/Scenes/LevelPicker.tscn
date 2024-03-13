@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bvkw6dxgaaptr"]
+
+[ext_resource type="Script" path="res://Scripts/LevelPicker.gd" id="1_en248"]
+
+[node name="LevelPicker" type="Node3D"]
+script = ExtResource("1_en248")

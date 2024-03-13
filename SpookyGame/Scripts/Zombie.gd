@@ -19,7 +19,7 @@ enum {RUNNING, WALKING, IDLE}
 
 func _ready():
 	state_machine = animation_tree.get("parameters/playback")
-	player = get_node("/root/World").find_child("Player")
+	player = get_node("/root/LevelPicker/World").find_child("Player")
 
 func _process(delta):
 	# Get the input direction and handle the movement/deceleration.

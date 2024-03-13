@@ -3,7 +3,7 @@ extends Node3D
 @onready var timer = $Timer
 var zombie = load("res://Scenes/Zombie.tscn")
 @onready var ZombieHeadScreen: Label = $ZombieHead/ZombieHead/ZombieHeadSprite/Label
-@export var zombiesLeft = 10
+@export var zombiesLeft = 20
 var instance
 @onready var navigation_region = $NavigationRegion3D/Zombies
 @export var clock: Clock
@@ -33,12 +33,6 @@ func _on_target_on_target_pressed(pos):
 		ZombieHeadScreen.text = str(zombiesLeft)
 		ready_to_spawn = false
 		timer.start()
-		
-		
-
-
-
-
 
 func _on_timer_timeout():
 	ready_to_spawn = true

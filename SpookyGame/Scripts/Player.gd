@@ -5,6 +5,8 @@ class_name Player
 @export var SPEED = 4
 @export var health = 100
 
+signal level_won
+
 var target_velocity = Vector3.ZERO
 var direction = Vector3.ZERO
 
@@ -18,6 +20,7 @@ var target: Vector3
 var intended_velocity
 var gridMap: GridPath
 var cell: Cell
+var can_change_targets: bool
 var rng = RandomNumberGenerator.new()
 
 signal player_hit
@@ -25,8 +28,8 @@ signal player_hit
 enum {RUNNING, WALKING, IDLE}
 
 func _ready():
-	gridMap = get_node("/root/World/NavigationRegion3D/GridMap")
-	healthBar = get_node("/root/World/Health/HealthBar")
+	gridMap = get_node("/root/LevelPicker/World/NavigationRegion3D/GridMap")
+	healthBar = get_node("/root/LevelPicker/World/Health/HealthBar")
 	healthBar.init_health(health)
 
 func getNextPosition() -> Vector3:
@@ -41,31 +44,16 @@ func getNextPosition() -> Vector3:
 	var intersection = space_state.intersect_ray(query)
 	
 	return Vector3(freeCells[randomCell].pos.x + 0.5, freeCells[randomCell].pos.y + 1.5, freeCells[randomCell].pos.z + 0.5)
-		
-	# Find new cell
-	#var farthestCellDistance = position.distance_squared_to(cell.pos)
-	#var farCells = []
-	#if freeCells.size() > 0:
-		#for newCell in freeCells:
-			#if position.distance_squared_to(newCell.pos) > 40:
-				#farCells.append(newCell)
-	#
-	#if farCells.size() > 0:
-		#var randomCell = rng.randi_range(0, farCells.size() - 1)
-		#cell = farCells[randomCell]
-		#return Vector3(farCells[randomCell].pos.x + 0.5, farCells[randomCell].pos.y + 1.5, farCells[randomCell].pos.z + 0.5)
-	#elif freeCells.size() > 0:
-		#var randomCell = rng.randi_range(0, freeCells.size() - 1)
-		#cell = freeCells[randomCell]
-		#return Vector3(freeCells[randomCell].pos.x + 0.5, freeCells[randomCell].pos.y + 1.5, freeCells[randomCell].pos.z + 0.5)
-	#return Vector3(cell.pos.x + 0.5, cell.pos.y + 1.5, cell.pos.z + 0.5)
+	
 		
 func changeTarget():
-	target = getNextPosition()
+	if can_change_targets:
+		target = getNextPosition()
+		can_change_targets = false
 
 func _process(delta):
 	# Get the input direction and handle the movement/deceleration.
-	intended_velocity = Vector3.ZERO
+	velocity = Vector3.ZERO
 	# Navigation Agent
 	nav_agent.set_target_position(target)
 	var next_nav_point = nav_agent.get_next_path_position()
@@ -75,7 +63,6 @@ func _process(delta):
 	# TODO: Handle the delta usecase?
 	velocity = (next_nav_point - global_transform.origin).normalized() * SPEED
 	if (nav_agent.is_target_reached() || position.distance_squared_to(target) < 4.2):
-		velocity = Vector3.ZERO
 		target = getNextPosition()
 	
 	# Determine what state the player is in
@@ -102,8 +89,15 @@ func hit():
 		healthBar.health = health
 	else:
 		healthBar.health = 0
+		emit_signal("level_won")
 	pass
 	
 func _on_navigation_agent_3d_velocity_computed(safe_velocity):
-	velocity = safe_velocity
-	move_and_slide()
+	#velocity = safe_velocity
+	#move_and_slide()
+	pass
+
+
+func _on_timer_timeout():
+	can_change_targets = true
+	pass # Replace with function body.
