@@ -2,7 +2,7 @@ extends Node3D
 class_name World
 @onready var timer = $Timer
 var zombie = load("res://Scenes/Zombie.tscn")
-@onready var ZombieHeadScreen: Label = $ZombieHead/ZombieHead/ZombieHeadSprite/Label
+@onready var ZombieHeadScreen: Label = $ZombieHead/Control/Control/Label
 @export var zombiesLeft = 20
 var instance: Zombie
 @onready var navigation_region = $NavigationRegion3D/Zombies
@@ -14,7 +14,7 @@ var wave: Wave
 func initWorld(newWave):
 	wave = newWave
 	zombiesLeft = wave.zombiePowerUps.zombieCount
-	$Health/Wave_Count.text = "WAVE " + str(wave.number + 1)
+	$WaveContainer/Health/Wave_Count.text = "WAVE " + str(wave.number + 1)
 	pass
 	
 

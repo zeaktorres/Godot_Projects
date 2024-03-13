@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://bugujjntax2o2"]
+[gd_scene load_steps=17 format=3 uid="uid://bugujjntax2o2"]
 
 [ext_resource type="Script" path="res://Scripts/World.gd" id="1_kbcnx"]
 [ext_resource type="Script" path="res://Scripts/Camera3D.gd" id="2_21l07"]
@@ -7,7 +7,6 @@
 [ext_resource type="PackedScene" uid="uid://v72th6qba4pm" path="res://Scenes/Player.tscn" id="4_a5htx"]
 [ext_resource type="MeshLibrary" uid="uid://dfevg3lwe37he" path="res://cube.tres" id="7_loxtq"]
 [ext_resource type="Texture2D" uid="uid://cqoj5ln2cvmrn" path="res://Grid_Textures/PNG/Dark/texture_01.png" id="7_rx4en"]
-[ext_resource type="PackedScene" uid="uid://bt1e3b0ddr7x6" path="res://Scenes/Clock.tscn" id="7_x8y3u"]
 [ext_resource type="Script" path="res://Scripts/GridMap.gd" id="8_2jqwb"]
 [ext_resource type="Script" path="res://Scripts/HealthBar.gd" id="10_xr656"]
 [ext_resource type="PackedScene" uid="uid://f3syq8bi6npf" path="res://Scenes/Zombie_Head.tscn" id="11_w2c7v"]
@@ -39,33 +38,48 @@ albedo_texture = ExtResource("7_rx4en")
 [node name="World" type="Node3D"]
 script = ExtResource("1_kbcnx")
 
-[node name="Health" type="Control" parent="."]
-layout_direction = 2
-layout_mode = 3
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
+[node name="WaveContainer" type="VBoxContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 92.0
+offset_right = -56.0
 grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
-[node name="HealthBar" type="ProgressBar" parent="Health"]
+[node name="Health" type="Control" parent="WaveContainer"]
+layout_direction = 2
+layout_mode = 2
+
+[node name="HealthBar" type="ProgressBar" parent="WaveContainer/Health"]
 z_index = 1
 custom_minimum_size = Vector2(1200, 50)
 layout_mode = 1
-offset_left = -600.0
-offset_top = 80.0
-offset_right = 600.0
-offset_bottom = 130.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -596.0
+offset_top = 69.0
+offset_right = 604.0
+offset_bottom = 119.0
+grow_horizontal = 2
+grow_vertical = 2
 theme_override_styles/background = SubResource("StyleBoxEmpty_4wc4c")
 theme_override_styles/fill = SubResource("StyleBoxFlat_l5cnn")
 value = 60.0
 script = ExtResource("10_xr656")
 
-[node name="DamageBar" type="ProgressBar" parent="Health/HealthBar"]
+[node name="DamageBar" type="ProgressBar" parent="WaveContainer/Health/HealthBar"]
 z_index = -1
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_right = -1100.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/background = SubResource("StyleBoxFlat_kc20v")
@@ -73,11 +87,11 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_dlt3w")
 value = 80.0
 show_percentage = false
 
-[node name="Timer" type="Timer" parent="Health/HealthBar"]
+[node name="Timer" type="Timer" parent="WaveContainer/Health/HealthBar"]
 wait_time = 0.4
 one_shot = true
 
-[node name="Wave_Count" type="Label" parent="Health"]
+[node name="Wave_Count" type="Label" parent="WaveContainer/Health"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -143,35 +157,11 @@ metadata/_editor_floor_ = Vector3(0, 0, 0)
 
 [node name="Grid" type="Node3D" parent="NavigationRegion3D"]
 
-[node name="Control" type="Control" parent="."]
-visible = false
-layout_mode = 3
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_top = -40.0
-offset_right = 40.0
-grow_vertical = 0
-
-[node name="Clock" parent="Control" instance=ExtResource("7_x8y3u")]
-
-[node name="ZombieHead" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_left = 115.0
-offset_top = -302.0
-offset_right = 155.0
-offset_bottom = -262.0
-grow_vertical = 0
-
-[node name="ZombieHead" parent="ZombieHead" instance=ExtResource("11_w2c7v")]
-
 [node name="Timer" type="Timer" parent="."]
 wait_time = 0.06
 
-[connection signal="timeout" from="Health/HealthBar/Timer" to="Health/HealthBar" method="_on_timer_timeout"]
+[node name="ZombieHead" parent="." instance=ExtResource("11_w2c7v")]
+
+[connection signal="timeout" from="WaveContainer/Health/HealthBar/Timer" to="WaveContainer/Health/HealthBar" method="_on_timer_timeout"]
 [connection signal="on_target_pressed" from="Target" to="." method="_on_target_on_target_pressed"]
-[connection signal="clock_timer_finished" from="Control/Clock" to="." method="_on_clock_clock_timer_finished"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

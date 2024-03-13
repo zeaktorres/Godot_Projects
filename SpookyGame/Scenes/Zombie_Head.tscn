@@ -3,22 +3,38 @@
 [ext_resource type="Texture2D" uid="uid://cmocetv3kjidr" path="res://Scenes/Zombie_Head-removebg-preview.png" id="1_pnope"]
 [ext_resource type="FontFile" uid="uid://dhwew6ugyhi4d" path="res://Xolonium-Regular.ttf" id="2_8wr7a"]
 
-[node name="ZombieHead" type="Node2D"]
+[node name="ZombieHead" type="HBoxContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="ZombieHeadSprite" type="Sprite2D" parent="."]
-position = Vector2(62, 131)
-scale = Vector2(0.5, 0.5)
+[node name="Control" type="Control" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Control" type="Control" parent="Control"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -170.0
+offset_right = 147.0
+grow_vertical = 0
+
+[node name="ZombieHeadSprite" type="Sprite2D" parent="Control/Control"]
+position = Vector2(69, 104)
+scale = Vector2(0.3, 0.3)
 texture = ExtResource("1_pnope")
 
-[node name="Label" type="Label" parent="ZombieHeadSprite"]
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -356.0
-offset_top = -300.0
-offset_right = -35.0
-offset_bottom = -119.0
+[node name="Label" type="Label" parent="Control/Control"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 61.0
 grow_horizontal = 2
 theme_override_fonts/font = ExtResource("2_8wr7a")
-theme_override_font_sizes/font_size = 150
+theme_override_font_sizes/font_size = 50
 text = "300"
+horizontal_alignment = 1

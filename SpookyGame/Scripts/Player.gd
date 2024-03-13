@@ -33,7 +33,7 @@ func setupHealth(newHealth):
 
 func _ready():
 	gridMap = get_node("/root/LevelPicker/World/NavigationRegion3D/GridMap")
-	healthBar = get_node("/root/LevelPicker/World/Health/HealthBar")
+	healthBar = get_node("/root/LevelPicker/World/WaveContainer/Health/HealthBar")
 	
 
 func getNextPosition() -> Vector3:
