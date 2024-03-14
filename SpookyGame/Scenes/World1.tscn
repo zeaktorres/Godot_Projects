@@ -109,7 +109,7 @@ text = "WAVE "
 transform = Transform3D(0.866025, -0.321394, 0.383022, 0, 0.766044, 0.642788, -0.5, -0.55667, 0.663414, 8, 11, 11)
 projection = 1
 fov = 120.0
-size = 28.0
+size = 24.0
 script = ExtResource("2_21l07")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
@@ -177,9 +177,8 @@ text = "Test"
 horizontal_alignment = 2
 
 [node name="LoseTimer" type="Timer" parent="TimerContainer"]
-wait_time = 60.0
+wait_time = 90.0
 one_shot = true
-autostart = true
 
 [connection signal="timeout" from="WaveContainer/Health/HealthBar/Timer" to="WaveContainer/Health/HealthBar" method="_on_timer_timeout"]
 [connection signal="on_target_pressed" from="Target" to="." method="_on_target_on_target_pressed"]

@@ -51,6 +51,8 @@ func _on_target_on_target_pressed(pos):
 		ZombieHeadScreen.text = str(zombiesLeft)
 		ready_to_spawn = false
 		timer.start()
+	
+	
 
 func _on_timer_timeout():
 	ready_to_spawn = true

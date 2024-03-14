@@ -41,9 +41,9 @@ anchor_left = 0.491
 anchor_top = 0.144
 anchor_right = 0.491
 anchor_bottom = 0.144
-offset_left = -211.632
+offset_left = -452.632
 offset_top = -93.312
-offset_right = 212.368
+offset_right = 498.368
 offset_bottom = 93.688
 grow_horizontal = 2
 theme_override_fonts/font = ExtResource("1_c1xis")
@@ -55,7 +55,7 @@ item_1/text = "Player Speed: "
 item_1/selectable = false
 item_2/text = "Timer: "
 item_2/selectable = false
-item_3/text = "Next Ability"
+item_3/text = "Next Player Ability: "
 item_3/selectable = false
 
 [node name="ZombiePowerUps" type="ItemList" parent="Control"]
@@ -65,9 +65,9 @@ anchor_left = 0.5
 anchor_top = 0.853
 anchor_right = 0.5
 anchor_bottom = 0.853
-offset_left = -232.0
+offset_left = -466.0
 offset_top = -94.744
-offset_right = 224.0
+offset_right = 487.0
 offset_bottom = 95.256
 grow_horizontal = 2
 grow_vertical = 0
@@ -80,7 +80,7 @@ item_1/text = "Zombie Count: "
 item_1/selectable = false
 item_2/text = "Zombie Damage: "
 item_2/selectable = false
-item_3/text = "Global High Score: "
+item_3/text = "Global High Score: TBI AFTER GAME JAM"
 item_3/selectable = false
 
 [node name="Timer" type="Timer" parent="."]

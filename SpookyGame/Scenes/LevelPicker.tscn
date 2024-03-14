@@ -4,3 +4,5 @@
 
 [node name="LevelPicker" type="Node3D"]
 script = ExtResource("1_en248")
+
+[node name="HTTPRequest" type="HTTPRequest" parent="."]

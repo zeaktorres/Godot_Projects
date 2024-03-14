@@ -24,9 +24,12 @@ var can_change_targets: bool = true
 var rng = RandomNumberGenerator.new()
 var zombiePowerUps: ZombiePowerUps
 var playerPowerUps: PlayerPowerUps
+@onready var changeTargetsTimer: Timer = $ChangeTargets
+@onready var dropMinestimer: Timer = $DropMine
 var world: World
 var minesLeft: int = 0
 var mineScene = load("res://Scenes/Mine.tscn")
+var hasWon = false
 
 signal player_hit
 
@@ -37,6 +40,13 @@ func setupHealth(newHealth):
 	healthBar.init_health(health)
 	changeTarget()
 	minesLeft = playerPowerUps.mineCount
+	speed = playerPowerUps.speed
+	if playerPowerUps.isReactiveAI:
+		changeTargetsTimer.wait_time = 0.1
+	if playerPowerUps.spawnMinesFast:	
+		dropMinestimer.stop()
+		dropMinestimer.wait_time = 1
+		dropMinestimer.start()
 
 func _ready():
 	gridMap = get_node("/root/LevelPicker/World/NavigationRegion3D/GridMap")
@@ -101,7 +111,9 @@ func hit():
 		healthBar.health = health
 	else:
 		healthBar.health = 0
-		emit_signal("level_won")
+		if hasWon == false:
+			emit_signal("level_won")
+			hasWon = true
 	pass
 	
 func _on_navigation_agent_3d_velocity_computed(safe_velocity):
@@ -123,6 +135,7 @@ func _on_drop_mine_timeout():
 	if minesLeft > 0:
 		var mineSceneInstance: Mine = mineScene.instantiate()
 		world.add_child(mineSceneInstance)
+		mineSceneInstance.position = Vector3(position.x, 1, position.z)
 		mineSceneInstance.removeMe.connect(removeMine)
 		minesLeft -= 1
 	pass # Replace with function body.
