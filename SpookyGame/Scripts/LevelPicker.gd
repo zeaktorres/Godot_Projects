@@ -2,17 +2,27 @@ extends Node3D
 
 var mainWorld = load("res://Scenes/World1.tscn")
 var shop = load("res://Scenes/Shop.tscn")
+var loseScreen = load("res://Scenes/Lose_Screen.tscn")
 var mainWorldInstance
+var loseScreenInstance
 var wave: Wave
 var zombiePowerUps: ZombiePowerUps
+var playerPowerUps: PlayerPowerUps
 var shopInstance 
 var player: Player
+var loseTimer: Timer
+@onready var playerPowerUpsLabel: ItemList = $Control/PlayerPowerUps
 
 # Called when the node enters the scene tree for the first time.
-func _ready():
+func setupPowers():
 	wave = Wave.new()
 	zombiePowerUps = ZombiePowerUps.new()
+	playerPowerUps = PlayerPowerUps.new()
 	wave.zombiePowerUps = zombiePowerUps
+	wave.playerPowerUps = playerPowerUps
+
+func _ready():
+	setupPowers()
 	setupWorld()
 	pass # Replace with function body.
 
@@ -29,8 +39,16 @@ func deleteShop():
 	remove_child(shopInstance)
 	shopInstance.free()
 	setupWorld()
+	
+func deleteLoseScreen():
+	remove_child(loseScreenInstance)
+	loseScreenInstance.free()
+
+func upgradePlayer():
+	playerPowerUps.health += (100 * (wave.number + 1))
 
 func level_won():
+	upgradePlayer()
 	call_deferred("deleteWorld")
 	shopInstance = shop.instantiate()
 	add_child(shopInstance)
@@ -38,17 +56,37 @@ func level_won():
 	shop.item_pressed.connect(item_selected)
 	shop.setupShop(["Faster Zombies", "More Zombies", "Big Zombies"])
 	wave.number += 1
-	#setupWorld()
+	var playerPowerUpsList: ItemList = shop.find_child("PlayerPowerUps")
+	playerPowerUpsList.set_item_text(0, playerPowerUpsList.get_item_text(0) + str(playerPowerUps.health))
+	playerPowerUpsList.set_item_text(1, playerPowerUpsList.get_item_text(1) + str(playerPowerUps.speed))
+	playerPowerUpsList.set_item_text(2, playerPowerUpsList.get_item_text(2) + str(playerPowerUps.timer))
+	var zombiePowerUpsList: ItemList = shop.find_child("ZombiePowerUps")
+	zombiePowerUpsList.set_item_text(0, zombiePowerUpsList.get_item_text(0) + str(zombiePowerUps.speed))
+	zombiePowerUpsList.set_item_text(1, zombiePowerUpsList.get_item_text(1) + str(zombiePowerUps.zombieCount))
+	zombiePowerUpsList.set_item_text(2, zombiePowerUpsList.get_item_text(2) + str(zombiePowerUps.damage))
+	
+func level_lost():
+	call_deferred("deleteWorld")
+	loseScreenInstance = loseScreen.instantiate()
+	add_child(loseScreenInstance)
+	var restartButton = get_node("/root/LevelPicker/LoseScreen/Control/Button")
+	restartButton.pressed.connect(restartLevel)
+	pass
+
+func restartLevel():
+	call_deferred("deleteLoseScreen")
+	setupPowers()
+	setupWorld()
 	
 func item_selected(index: int):
 	match index:
 		0:
-			zombiePowerUps.speed += 2
+			zombiePowerUps.speed += 0.5
 		1: 
 			zombiePowerUps.zombieCount += 5
 		2:
 			zombiePowerUps.size += 0.1
-			zombiePowerUps.damage *= 2
+			zombiePowerUps.damage += 10
 	call_deferred("deleteShop")
 	
 
@@ -59,5 +97,10 @@ func setupWorld():
 	world.initWorld(wave)
 	player = world.find_child("Player")
 	player.level_won.connect(level_won)
-	player.health *= (wave.number + 1)
+	player.health += playerPowerUps.health 
 	player.setupHealth(player.health)
+	player.speed = playerPowerUps.speed
+	player.zombiePowerUps = zombiePowerUps
+	loseTimer = world.find_child("LoseTimer", true)
+	loseTimer.timeout.connect(level_lost)
+	

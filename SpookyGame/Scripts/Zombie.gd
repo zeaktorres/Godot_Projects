@@ -20,24 +20,24 @@ enum {RUNNING, WALKING, IDLE}
 func _set_speed(newSpeed):
 	$NavigationAgent3D.max_speed = newSpeed
 	$NavigationAgent3D.target_desired_distance *= scale.x
-	print($NavigationAgent3D.target_desired_distance)
 	speed = newSpeed
 
 func _ready():
 	state_machine = animation_tree.get("parameters/playback")
 	player = get_node("/root/LevelPicker/World").find_child("Player")
+	nav_agent.set_target_position(Vector3(player.position.x, position.y, player.position.z))
 
-func _process(delta):
+func _physics_process(delta):
 	# Get the input direction and handle the movement/deceleration.
 	velocity = Vector3.ZERO
 
 	# Move zombie
-	nav_agent.set_target_position(Vector3(player.position.x, position.y, player.position.z))
+	
 	var next_nav_point = nav_agent.get_next_path_position()
 	var direction = next_nav_point - global_transform.origin
 	match state_machine.get_current_node():
 		"Attack":
-			animation_tree.advance(delta * 1.5)
+			animation_tree.advance(delta * 1.5 * (speed / 3))
 			pass
 		_:
 			intended_velocity = (next_nav_point - global_transform.origin).normalized() * speed
@@ -83,3 +83,8 @@ func _on_navigation_agent_3d_velocity_computed(safe_velocity):
 	if state_machine.get_current_node() != "Attack":
 		velocity = safe_velocity
 		move_and_slide()
+
+
+func _on_change_target_timeout():
+	nav_agent.set_target_position(Vector3(player.position.x, position.y, player.position.z))
+	pass # Replace with function body.

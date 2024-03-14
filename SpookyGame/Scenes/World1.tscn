@@ -42,12 +42,9 @@ script = ExtResource("1_kbcnx")
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 92.0
-offset_right = -56.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
-size_flags_vertical = 3
 
 [node name="Health" type="Control" parent="WaveContainer"]
 layout_direction = 2
@@ -55,7 +52,7 @@ layout_mode = 2
 
 [node name="HealthBar" type="ProgressBar" parent="WaveContainer/Health"]
 z_index = 1
-custom_minimum_size = Vector2(1200, 50)
+custom_minimum_size = Vector2(1200, 30)
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -65,7 +62,7 @@ anchor_bottom = 0.5
 offset_left = -596.0
 offset_top = 69.0
 offset_right = 604.0
-offset_bottom = 119.0
+offset_bottom = 99.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/background = SubResource("StyleBoxEmpty_4wc4c")
@@ -105,14 +102,14 @@ offset_bottom = 63.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_fonts/font = ExtResource("3_xfa2p")
-theme_override_font_sizes/font_size = 40
+theme_override_font_sizes/font_size = 30
 text = "WAVE "
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(0.866025, -0.321394, 0.383022, 0, 0.766044, 0.642788, -0.5, -0.55667, 0.663414, 8, 11, 11)
 projection = 1
 fov = 120.0
-size = 25.0
+size = 28.0
 script = ExtResource("2_21l07")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
@@ -157,11 +154,33 @@ metadata/_editor_floor_ = Vector3(0, 0, 0)
 
 [node name="Grid" type="Node3D" parent="NavigationRegion3D"]
 
-[node name="Timer" type="Timer" parent="."]
+[node name="ZombieSpawn" type="Timer" parent="."]
 wait_time = 0.06
 
 [node name="ZombieHead" parent="." instance=ExtResource("11_w2c7v")]
 
+[node name="TimerContainer" type="VBoxContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="TimeLeft" type="Label" parent="TimerContainer"]
+layout_mode = 2
+size_flags_vertical = 10
+theme_override_fonts/font = ExtResource("3_xfa2p")
+theme_override_font_sizes/font_size = 90
+text = "Test"
+horizontal_alignment = 2
+
+[node name="LoseTimer" type="Timer" parent="TimerContainer"]
+wait_time = 60.0
+one_shot = true
+autostart = true
+
 [connection signal="timeout" from="WaveContainer/Health/HealthBar/Timer" to="WaveContainer/Health/HealthBar" method="_on_timer_timeout"]
 [connection signal="on_target_pressed" from="Target" to="." method="_on_target_on_target_pressed"]
-[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="timeout" from="ZombieSpawn" to="." method="_on_timer_timeout"]
