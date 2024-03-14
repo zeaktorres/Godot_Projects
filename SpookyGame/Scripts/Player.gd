@@ -23,6 +23,10 @@ var cell: Cell
 var can_change_targets: bool = true
 var rng = RandomNumberGenerator.new()
 var zombiePowerUps: ZombiePowerUps
+var playerPowerUps: PlayerPowerUps
+var world: World
+var minesLeft: int = 0
+var mineScene = load("res://Scenes/Mine.tscn")
 
 signal player_hit
 
@@ -32,10 +36,12 @@ func setupHealth(newHealth):
 	health = newHealth
 	healthBar.init_health(health)
 	changeTarget()
+	minesLeft = playerPowerUps.mineCount
 
 func _ready():
 	gridMap = get_node("/root/LevelPicker/World/NavigationRegion3D/GridMap")
 	healthBar = get_node("/root/LevelPicker/World/WaveContainer/Health/HealthBar")
+	world = get_node("/root/LevelPicker/World")
 
 func getNextPosition() -> Vector3:
 	var freeCells = gridMap.getFreeCells()
@@ -106,4 +112,17 @@ func _on_navigation_agent_3d_velocity_computed(safe_velocity):
 
 func _on_timer_timeout():
 	can_change_targets = true
+	pass # Replace with function body.
+
+func removeMine(node: Node3D):
+	world.remove_child(node)
+	node.queue_free()
+	pass
+
+func _on_drop_mine_timeout():
+	if minesLeft > 0:
+		var mineSceneInstance: Mine = mineScene.instantiate()
+		world.add_child(mineSceneInstance)
+		mineSceneInstance.removeMe.connect(removeMine)
+		minesLeft -= 1
 	pass # Replace with function body.

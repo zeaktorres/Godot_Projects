@@ -45,10 +45,15 @@ func deleteLoseScreen():
 	loseScreenInstance.free()
 
 func upgradePlayer():
-	playerPowerUps.health += (100 * (wave.number + 1))
+	print(wave.number)
+	match wave.number:
+		0:
+			playerPowerUps.health += (100 * (wave.number + (1/4)))
+		1:
+			playerPowerUps.mineCount = 1
+			print("HERE")
 
 func level_won():
-	upgradePlayer()
 	call_deferred("deleteWorld")
 	shopInstance = shop.instantiate()
 	add_child(shopInstance)
@@ -64,6 +69,7 @@ func level_won():
 	zombiePowerUpsList.set_item_text(0, zombiePowerUpsList.get_item_text(0) + str(zombiePowerUps.speed))
 	zombiePowerUpsList.set_item_text(1, zombiePowerUpsList.get_item_text(1) + str(zombiePowerUps.zombieCount))
 	zombiePowerUpsList.set_item_text(2, zombiePowerUpsList.get_item_text(2) + str(zombiePowerUps.damage))
+	upgradePlayer()
 	
 func level_lost():
 	call_deferred("deleteWorld")
@@ -96,11 +102,15 @@ func setupWorld():
 	var world: World = get_node("/root/LevelPicker/World")
 	world.initWorld(wave)
 	player = world.find_child("Player")
+	
+	# TODO REMOVE MINE COUNT HERE
+	player.playerPowerUps = playerPowerUps
+	player.playerPowerUps.mineCount = 1
 	player.level_won.connect(level_won)
 	player.health += playerPowerUps.health 
-	player.setupHealth(player.health)
 	player.speed = playerPowerUps.speed
 	player.zombiePowerUps = zombiePowerUps
+	player.setupHealth(player.health)
 	loseTimer = world.find_child("LoseTimer", true)
 	loseTimer.timeout.connect(level_lost)
 	

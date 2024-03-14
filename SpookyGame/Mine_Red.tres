@@ -1,0 +1,7 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://dl8rsxbsbxncb"]
+
+[resource]
+resource_name = "BlackBaseLightingTurret1"
+cull_mode = 2
+albedo_color = Color(1, 0.076461, 0.0662405, 1)
+roughness = 0.5
