@@ -1,0 +1,33 @@
+[gd_scene load_steps=5 format=3 uid="uid://dejdswh8l8tlr"]
+
+[ext_resource type="Texture2D" uid="uid://k0laqhvum3sl" path="res://Grid_Textures/PNG/Orange/texture_01.png" id="1_077qi"]
+[ext_resource type="PackedScene" uid="uid://32sadhn01axm" path="res://Scenes/player.tscn" id="2_722to"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_278ad"]
+albedo_texture = ExtResource("1_077qi")
+ao_enabled = true
+uv1_triplanar = true
+uv1_world_triplanar = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qn0pe"]
+
+[node name="Node3D" type="Node3D"]
+
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="."]
+use_collision = true
+
+[node name="Floor" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.253174, 0, 0)
+size = Vector3(20, 1, 20)
+material = SubResource("StandardMaterial3D_278ad")
+
+[node name="Column" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+size = Vector3(1, 2, 1)
+material = SubResource("StandardMaterial3D_qn0pe")
+
+[node name="Player" parent="." instance=ExtResource("2_722to")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0.5, -3)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.965926, 2.87868e-08, -0.258819, -0.224144, 0.5, 0.836516, 0.12941, 0.866026, -0.482963, -11, 9, -7)

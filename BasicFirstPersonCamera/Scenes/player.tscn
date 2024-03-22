@@ -1,0 +1,169 @@
+[gd_scene load_steps=12 format=3 uid="uid://32sadhn01axm"]
+
+[ext_resource type="Script" path="res://Scripts/fps_controller.gd" id="1_gaj5x"]
+[ext_resource type="Script" path="res://Scripts/PlayerCamera.gd" id="2_htqq5"]
+[ext_resource type="Texture2D" uid="uid://p2eilgbekag" path="res://scaled_crosshair_100_100.png" id="3_03co1"]
+[ext_resource type="PackedScene" uid="uid://cm44can003x2y" path="res://Scenes/zeak_gun.tscn" id="4_abu2p"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_khlsw"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_afi51"]
+
+[sub_resource type="Animation" id="Animation_lbexl"]
+resource_name = "idle"
+length = 3.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CameraController/Camera3D/zeak_first_gun_second_trigger:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.5),
+"transitions": PackedFloat32Array(-2, -2),
+"update": 0,
+"values": [Vector3(0.55, -0.5, -1), Vector3(0.55, -0.55, -1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CameraController/Camera3D/zeak_first_gun_second_trigger:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1.5),
+"transitions": PackedFloat32Array(-2, -2),
+"update": 0,
+"values": [Vector3(0, 3.14159, 0), Vector3(0.139626, 3.14159, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_h1srb"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CameraController/Camera3D/zeak_first_gun_second_trigger:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0.55, -0.5, -1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CameraController/Camera3D/zeak_first_gun_second_trigger:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 3.14159, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_ikad8"]
+resource_name = "move"
+loop_mode = 1
+step = 0.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CameraController/Camera3D/zeak_first_gun_second_trigger:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.5, 0.75),
+"transitions": PackedFloat32Array(0.5, 2, 0.5, 2),
+"update": 0,
+"values": [Vector3(0.55, -0.5, -1), Vector3(0.5, -0.45, -1), Vector3(0.55, -0.5, -1), Vector3(0.6, -0.45, -1)]
+}
+
+[sub_resource type="Animation" id="Animation_u34oe"]
+resource_name = "shoot"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CameraController/Camera3D/zeak_first_gun_second_trigger:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(0.5, 1),
+"update": 0,
+"values": [Vector3(0.55, -0.2, -1), Vector3(0.55, -0.5, -1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CameraController/Camera3D/zeak_first_gun_second_trigger:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(0.5, 1),
+"update": 0,
+"values": [Vector3(-0.785398, 3.14159, 1.50996e-07), Vector3(0, 3.14159, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_3nnm8"]
+_data = {
+"RESET": SubResource("Animation_h1srb"),
+"idle": SubResource("Animation_lbexl"),
+"move": SubResource("Animation_ikad8"),
+"shoot": SubResource("Animation_u34oe")
+}
+
+[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("CAMERA_CONTROLLER")]
+script = ExtResource("1_gaj5x")
+CAMERA_CONTROLLER = NodePath("CameraController/Camera3D")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_khlsw")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CollisionShape3D"]
+mesh = SubResource("CapsuleMesh_afi51")
+skeleton = NodePath("../..")
+
+[node name="CameraController" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+
+[node name="Camera3D" type="Camera3D" parent="CameraController"]
+script = ExtResource("2_htqq5")
+
+[node name="ReflectionProbe" type="ReflectionProbe" parent="CameraController/Camera3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.5, 0)
+visible = false
+update_mode = 1
+
+[node name="RayCast3D" type="RayCast3D" parent="CameraController/Camera3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
+target_position = Vector3(0, 0, -100)
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CameraController/Camera3D"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+
+[node name="TextureRect" type="TextureRect" parent="CameraController/Camera3D/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("3_03co1")
+stretch_mode = 3
+
+[node name="zeak_first_gun_second_trigger" parent="CameraController/Camera3D" instance=ExtResource("4_abu2p")]
+transform = Transform3D(-0.1, 0, 1.50996e-08, 0, 0.1, 0, -1.50996e-08, 0, -0.1, 0.55, -0.5, -1)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_3nnm8")
+}
+autoplay = "idle"
