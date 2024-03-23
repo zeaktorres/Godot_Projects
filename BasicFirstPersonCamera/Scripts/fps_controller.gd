@@ -1,5 +1,7 @@
 extends CharacterBody3D
 
+@onready var anim_player = $AnimationPlayer
+
 @export var MOUSE_SENSITIVITY : float = 0.2
 @export var CONTROLLER_SENSITIVITY : float = 5
 @export var TILT_LOWER_LIMIT := deg_to_rad(-90.0)
@@ -20,7 +22,15 @@ const JUMP_VELOCITY = 4.5
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
+func play_shoot_effects():
+	anim_player.stop()
+	anim_player.play("shoot")
+
 func _input(event):
+	if event.is_action_pressed("shoot") \
+		&& anim_player.current_animation != "shoot":
+		play_shoot_effects()
+
 	if event.is_action_pressed("exit"):
 		get_tree().quit()
 		
@@ -82,5 +92,14 @@ func _physics_process(delta):
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 		velocity.z = move_toward(velocity.z, 0, SPEED)
+
+	if anim_player.current_animation == "shoot":
+		pass
+
+	elif input_dir != Vector2.ZERO and is_on_floor():
+		anim_player.play("move")
+	else:
+		anim_player.play("idle")
+	
 
 	move_and_slide()
