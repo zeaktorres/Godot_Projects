@@ -35,7 +35,7 @@ func play_shoot_effects():
 	pelletInstance = pelletScene.instantiate()
 	pelletInstance.position = Vector3(pistol.global_position.x, pistol.global_position.y, pistol.global_position.z)
 	pelletInstance.emitting = true
-	var farPoint = rayCast.global_position + (rayCast.global_basis * Vector3.FORWARD * 10)
+	var farPoint = rayCast.global_position + (rayCast.global_basis * Vector3.FORWARD * 100)
 	print("FAR POINT")
 	print(farPoint)
 	print("PELLET POINT")
