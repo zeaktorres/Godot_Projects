@@ -105,15 +105,6 @@ shadow_mesh = SubResource("ArrayMesh_rggg4")
 
 [node name="zeak_first_gun_second_trigger" type="Node3D"]
 
-[node name="Camera" type="Camera3D" parent="."]
-transform = Transform3D(0.685921, -0.324013, 0.651558, -1.49012e-08, 0.895396, 0.445271, -0.727676, -0.305421, 0.61417, 7.35889, 4.95831, 6.92579)
-fov = 22.8952
-near = 0.1
-far = 100.0
-
-[node name="Empty" type="Node3D" parent="."]
-transform = Transform3D(1.04214e-07, -0.87421, -1.30267e-07, 5.2107e-08, 1.04214e-07, -0.87421, -0.87421, -1.30267e-07, -1.04214e-07, -5.04734, 0.572871, -0.191784)
-
 [node name="Cube" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0473433, 0.707008, 0.00787175)
 mesh = SubResource("ArrayMesh_dtokd")

@@ -14,6 +14,7 @@ func _ready():
 	sphereMesh.material = redMaterial
 	hitMesh = MeshInstance3D.new()
 	hitMesh.mesh = sphereMesh
+	print(hitMesh.position)
 	pass # Replace with function body. 
 func _input(event):
 	if event.is_action_pressed("shoot"):
@@ -32,14 +33,8 @@ func Get_Camera_Collision():
 	
 	
 	if rayCast.is_colliding():
-		print(rayCast.get_collider())
-		print(rayCast.get_collision_point())
 		hitMesh.position = rayCast.get_collision_point()
 		hasHitMesh = true
-		#hitMesh.show()
-	else:
-		print("Nothing")
-
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
 	pass

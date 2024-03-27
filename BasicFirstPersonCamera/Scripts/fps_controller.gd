@@ -7,12 +7,16 @@ extends CharacterBody3D
 @export var TILT_LOWER_LIMIT := deg_to_rad(-90.0)
 @export var TILT_UPPER_LIMIT := deg_to_rad(90.0)
 @export var CAMERA_CONTROLLER : Camera3D
+var rootNode: Node3D
 var _mouse_rotation : Vector3
 var _mouse_input: bool = false
 var _rotation_input: float
 var _tilt_input: float
 var _camera_rotation : Vector3
 var _player_rotation : Vector3
+var pelletScene = load("res://Scenes//pellet.tscn")
+var pelletInstance: Pellet
+@export var rayCast: RayCast3D
 #var _controller_input: bool = false
 
 
@@ -23,8 +27,18 @@ const JUMP_VELOCITY = 4.5
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
 func play_shoot_effects():
+	# Anim player
 	anim_player.stop()
 	anim_player.play("shoot")
+
+	pelletInstance = pelletScene.instantiate()
+	pelletInstance.position = Vector3(rayCast.global_position.x, rayCast.global_position.y, rayCast.global_position.z)
+	pelletInstance.emitting = true
+	var pelletDirection = rayCast.global_basis
+	var pelletDirectionNormalized = (pelletDirection * Vector3.FORWARD).normalized()
+	pelletInstance.direction = pelletDirectionNormalized
+	rootNode.add_child(pelletInstance)
+	pass
 
 func _input(event):
 	if event.is_action_pressed("shoot") \
@@ -68,7 +82,9 @@ func _update_camera(delta):
 		
 
 func _ready():
+	rootNode = get_node("/root/Node3D")
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+
 
 func _physics_process(delta):
 	# Add the gravity.
