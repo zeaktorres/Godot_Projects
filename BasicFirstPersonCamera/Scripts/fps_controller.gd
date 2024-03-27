@@ -36,10 +36,6 @@ func play_shoot_effects():
 	pelletInstance.position = Vector3(pistol.global_position.x, pistol.global_position.y, pistol.global_position.z)
 	pelletInstance.emitting = true
 	var farPoint = rayCast.global_position + (rayCast.global_basis * Vector3.FORWARD * 100)
-	print("FAR POINT")
-	print(farPoint)
-	print("PELLET POINT")
-	print(pelletInstance.position)
 	pelletInstance.direction = (pelletInstance.position.direction_to(farPoint))
 	rootNode.add_child(pelletInstance)
 	pass
