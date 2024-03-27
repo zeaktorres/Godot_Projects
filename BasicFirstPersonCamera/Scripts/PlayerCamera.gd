@@ -6,6 +6,7 @@ extends Camera3D
 @onready var sphereMesh: SphereMesh = SphereMesh.new()
 @onready var redMaterial: Material = load("res://Materials/red_material.tres")
 
+
 var hasHitMesh = false
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -33,7 +34,15 @@ func Get_Camera_Collision():
 	
 	
 	if rayCast.is_colliding():
+		print("POSITION")
+		print((rayCast.global_position))
+		print("BASIS FORWARD")
+		print(rayCast.global_basis * Vector3.FORWARD * 1)
+		print("BASIS MOVED")
+		print(rayCast.global_position + (rayCast.global_basis * Vector3.FORWARD * 2))
 		hitMesh.position = rayCast.get_collision_point()
+		print("HITMESH")
+		print(hitMesh.position)
 		hasHitMesh = true
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):

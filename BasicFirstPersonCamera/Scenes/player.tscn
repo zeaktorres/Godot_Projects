@@ -118,13 +118,10 @@ _data = {
 "shoot": SubResource("Animation_u34oe")
 }
 
-[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("CAMERA_CONTROLLER", "rayCast")]
+[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("CAMERA_CONTROLLER", "pistol", "rayCast")]
 script = ExtResource("1_gaj5x")
-MOUSE_SENSITIVITY = null
-CONTROLLER_SENSITIVITY = null
-TILT_LOWER_LIMIT = null
-TILT_UPPER_LIMIT = null
 CAMERA_CONTROLLER = NodePath("CameraController/Camera3D")
+pistol = NodePath("CameraController/Camera3D/Pistol")
 rayCast = NodePath("CameraController/Camera3D/RayCast3D")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]

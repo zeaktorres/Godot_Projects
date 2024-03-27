@@ -7,6 +7,7 @@ extends CharacterBody3D
 @export var TILT_LOWER_LIMIT := deg_to_rad(-90.0)
 @export var TILT_UPPER_LIMIT := deg_to_rad(90.0)
 @export var CAMERA_CONTROLLER : Camera3D
+@export var pistol: Node3D
 var rootNode: Node3D
 var _mouse_rotation : Vector3
 var _mouse_input: bool = false
@@ -32,11 +33,14 @@ func play_shoot_effects():
 	anim_player.play("shoot")
 
 	pelletInstance = pelletScene.instantiate()
-	pelletInstance.position = Vector3(rayCast.global_position.x, rayCast.global_position.y, rayCast.global_position.z)
+	pelletInstance.position = Vector3(pistol.global_position.x, pistol.global_position.y, pistol.global_position.z)
 	pelletInstance.emitting = true
-	var pelletDirection = rayCast.global_basis
-	var pelletDirectionNormalized = (pelletDirection * Vector3.FORWARD).normalized()
-	pelletInstance.direction = pelletDirectionNormalized
+	var farPoint = rayCast.global_position + (rayCast.global_basis * Vector3.FORWARD * 10)
+	print("FAR POINT")
+	print(farPoint)
+	print("PELLET POINT")
+	print(pelletInstance.position)
+	pelletInstance.direction = (pelletInstance.position.direction_to(farPoint))
 	rootNode.add_child(pelletInstance)
 	pass
 

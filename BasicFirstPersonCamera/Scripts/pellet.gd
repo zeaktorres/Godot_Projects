@@ -6,6 +6,10 @@ var direction: Vector3
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	connect("finished", onFinished)
+	print("DIRECTION")
+	print(direction)
+	get_process_material().velocity_pivot = direction
+	get_process_material().direction = Vector3(direction.x * -1, direction.y, direction.z * -1)
 	pass # RepPersonMovement/'lace with function body.
 
 
@@ -15,8 +19,6 @@ func _process(_delta):
 
 func _physics_process(delta):
 	#move_toward(position.x + (direction.x * 1), position.y + (direction.y * 1), position.z + (direction.z * 1) )
-	get_process_material().velocity_pivot = direction
-	get_process_material().direction = Vector3(direction.x * -1, direction.y, direction.z * -1)
 	pass
 
 func onFinished():
