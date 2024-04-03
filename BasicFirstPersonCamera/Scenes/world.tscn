@@ -1,7 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://dejdswh8l8tlr"]
+[gd_scene load_steps=7 format=3 uid="uid://dejdswh8l8tlr"]
 
 [ext_resource type="Texture2D" uid="uid://k0laqhvum3sl" path="res://Grid_Textures/PNG/Orange/texture_01.png" id="1_077qi"]
 [ext_resource type="Script" path="res://Scripts/world.gd" id="1_qntld"]
+[ext_resource type="PackedScene" uid="uid://du7g23gs1qxrt" path="res://Scenes/main_menu.tscn" id="3_hscsy"]
+[ext_resource type="PackedScene" uid="uid://bit1wvdvf3byp" path="res://Scenes/pause.tscn" id="4_fjd8n"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_278ad"]
 albedo_texture = ExtResource("1_077qi")
@@ -38,48 +40,9 @@ transform = Transform3D(-0.965926, 2.87868e-08, -0.258819, -0.224144, 0.5, 0.836
 _spawnable_scenes = PackedStringArray("res://Scenes/player.tscn")
 spawn_path = NodePath("..")
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
+[node name="MainMenu" parent="." instance=ExtResource("3_hscsy")]
 
-[node name="MainMenu" type="PanelContainer" parent="CanvasLayer"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 265.0
-offset_top = 212.0
-offset_right = -265.0
-offset_bottom = -212.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="Pause" parent="." instance=ExtResource("4_fjd8n")]
 
-[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/MainMenu"]
-layout_mode = 2
-theme_override_constants/margin_left = 15
-theme_override_constants/margin_top = 15
-theme_override_constants/margin_right = 15
-theme_override_constants/margin_bottom = 15
-
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/MainMenu/MarginContainer"]
-layout_mode = 2
-theme_override_constants/separation = 15
-
-[node name="Label" type="Label" parent="CanvasLayer/MainMenu/MarginContainer/VBoxContainer"]
-layout_mode = 2
-text = "Main Menu"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="HostButton" type="Button" parent="CanvasLayer/MainMenu/MarginContainer/VBoxContainer"]
-layout_mode = 2
-text = "Host"
-
-[node name="JoinButton" type="Button" parent="CanvasLayer/MainMenu/MarginContainer/VBoxContainer"]
-layout_mode = 2
-text = "Join"
-
-[node name="AddressEntry" type="LineEdit" parent="CanvasLayer/MainMenu/MarginContainer/VBoxContainer"]
-layout_mode = 2
-placeholder_text = "Enter Address to join"
-alignment = 1
-
-[connection signal="pressed" from="CanvasLayer/MainMenu/MarginContainer/VBoxContainer/HostButton" to="." method="_on_host_button_pressed"]
-[connection signal="pressed" from="CanvasLayer/MainMenu/MarginContainer/VBoxContainer/JoinButton" to="." method="_on_join_button_pressed"]
+[connection signal="hostButtonPressed" from="MainMenu" to="." method="_on_host_button_pressed"]
+[connection signal="joinButtonPressed" from="MainMenu" to="." method="_on_join_button_pressed"]

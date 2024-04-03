@@ -48,9 +48,6 @@ func _input(event):
 	if event.is_action_pressed("shoot") \
 		&& anim_player.current_animation != "shoot":
 		play_shoot_effects()
-
-	if event.is_action_pressed("exit"):
-		get_tree().quit()
 		
 
 func _unhandled_input(event):
@@ -88,15 +85,10 @@ func _update_camera(delta):
 		
 
 func _enter_tree():
-	if multiplayer_id == 0:
-		return
-	print(get_window().get_window_id())
-	get_window().grab_focus()
 	rootNode = get_parent()
 	set_multiplayer_authority(multiplayer_id)
 	get_tree().root.title += str(multiplayer_id)
 	CAMERA_CONTROLLER.current = true
-	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
 
 func _physics_process(delta):
