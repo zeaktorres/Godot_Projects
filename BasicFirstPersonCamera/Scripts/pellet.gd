@@ -5,8 +5,7 @@ var direction: Vector3
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	connect("finished", onFinished)
-	get_process_material().velocity_pivot = direction
+	finished.connect(onFinished)
 	get_process_material().direction = Vector3(direction.x * -1, direction.y, direction.z * -1)
 	pass # RepPersonMovement/'lace with function body.
 

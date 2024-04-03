@@ -8,7 +8,7 @@ extends CharacterBody3D
 @export var TILT_UPPER_LIMIT := deg_to_rad(90.0)
 @export var CAMERA_CONTROLLER : Camera3D
 @export var pistol: Node3D
-var rootNode: Node3D
+var rootNode: World
 var _mouse_rotation : Vector3
 var _mouse_input: bool = false
 var _rotation_input: float
@@ -17,6 +17,8 @@ var _camera_rotation : Vector3
 var _player_rotation : Vector3
 var pelletScene = load("res://Scenes//pellet.tscn")
 var pelletInstance: Pellet
+var multiplayer_id: int = 0
+var boolSetup: bool = false
 @export var rayCast: RayCast3D
 #var _controller_input: bool = false
 
@@ -37,10 +39,12 @@ func play_shoot_effects():
 	pelletInstance.emitting = true
 	var farPoint = rayCast.global_position + (rayCast.global_basis * Vector3.FORWARD * 100)
 	pelletInstance.direction = (pelletInstance.position.direction_to(farPoint))
-	rootNode.add_child(pelletInstance)
+	#rootNode.add_child(pelletInstance)
 	pass
 
 func _input(event):
+	if not is_multiplayer_authority(): return
+	
 	if event.is_action_pressed("shoot") \
 		&& anim_player.current_animation != "shoot":
 		play_shoot_effects()
@@ -50,6 +54,8 @@ func _input(event):
 		
 
 func _unhandled_input(event):
+	if multiplayer_id != get_multiplayer_authority(): return
+	
 	_mouse_input = event is InputEventMouseMotion and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED
 	if _mouse_input:
 		_rotation_input = -event.relative.x * MOUSE_SENSITIVITY
@@ -81,12 +87,21 @@ func _update_camera(delta):
 	_tilt_input = 0
 		
 
-func _ready():
-	rootNode = get_node("/root/Node3D")
+func _enter_tree():
+	if multiplayer_id == 0:
+		return
+	print(get_window().get_window_id())
+	get_window().grab_focus()
+	rootNode = get_parent()
+	set_multiplayer_authority(multiplayer_id)
+	get_tree().root.title += str(multiplayer_id)
+	CAMERA_CONTROLLER.current = true
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
 
 func _physics_process(delta):
+	if not is_multiplayer_authority(): return
+	
 	# Add the gravity.
 	if not is_on_floor():
 		velocity.y -= gravity * delta
@@ -119,3 +134,4 @@ func _physics_process(delta):
 	
 
 	move_and_slide()
+
