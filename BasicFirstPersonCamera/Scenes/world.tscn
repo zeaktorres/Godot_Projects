@@ -44,5 +44,7 @@ spawn_path = NodePath("..")
 
 [node name="Pause" parent="." instance=ExtResource("4_fjd8n")]
 
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+
 [connection signal="hostButtonPressed" from="MainMenu" to="." method="_on_host_button_pressed"]
 [connection signal="joinButtonPressed" from="MainMenu" to="." method="_on_join_button_pressed"]

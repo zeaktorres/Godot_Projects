@@ -53,5 +53,7 @@ func _on_join_button_pressed():
 	
 func add_player(peer_id):
 	var player = Player.instantiate()
+	player.set_multiplayer_authority(peer_id)
 	player.multiplayer_id = peer_id
+	player.name = str(peer_id)
 	add_child(player)

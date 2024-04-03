@@ -51,7 +51,7 @@ func _input(event):
 		
 
 func _unhandled_input(event):
-	if multiplayer_id != get_multiplayer_authority(): return
+	if not is_multiplayer_authority(): return
 	
 	_mouse_input = event is InputEventMouseMotion and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED
 	if _mouse_input:
@@ -86,9 +86,12 @@ func _update_camera(delta):
 
 func _enter_tree():
 	rootNode = get_parent()
-	set_multiplayer_authority(multiplayer_id)
-	get_tree().root.title += str(multiplayer_id)
+	set_multiplayer_authority(name.to_int())
+	if not is_multiplayer_authority(): return
+	position = Vector3(1,1,1)
+	get_tree().root.title += str(name.to_int())
 	CAMERA_CONTROLLER.current = true
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
 
 func _physics_process(delta):
