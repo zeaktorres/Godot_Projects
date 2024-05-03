@@ -103,7 +103,7 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_rggg4")
 
-[node name="zeak_first_gun_second_trigger" type="Node3D"]
+[node name="zeak_gun" type="Node3D"]
 
 [node name="Cube" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0473433, 0.707008, 0.00787175)

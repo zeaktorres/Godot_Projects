@@ -18,6 +18,8 @@ script = ExtResource("1_qntld")
 
 [node name="CSGCombiner3D" type="CSGCombiner3D" parent="."]
 use_collision = true
+collision_layer = 4
+collision_mask = 4
 
 [node name="Floor" type="CSGBox3D" parent="CSGCombiner3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.253174, 0, 0)
@@ -44,7 +46,6 @@ spawn_path = NodePath("..")
 
 [node name="Pause" parent="." instance=ExtResource("4_fjd8n")]
 
-[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
-
 [connection signal="hostButtonPressed" from="MainMenu" to="." method="_on_host_button_pressed"]
 [connection signal="joinButtonPressed" from="MainMenu" to="." method="_on_join_button_pressed"]
+[connection signal="exitButton" from="Pause" to="." method="_on_pause_exit_button"]

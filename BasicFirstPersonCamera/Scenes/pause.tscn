@@ -1,6 +1,9 @@
-[gd_scene format=3 uid="uid://bit1wvdvf3byp"]
+[gd_scene load_steps=2 format=3 uid="uid://bit1wvdvf3byp"]
+
+[ext_resource type="Script" path="res://Scripts/pause_world.gd" id="1_ngxfk"]
 
 [node name="Pause" type="CanvasLayer"]
+script = ExtResource("1_ngxfk")
 
 [node name="PauseMenu" type="PanelContainer" parent="."]
 anchors_preset = 15
@@ -30,6 +33,8 @@ text = "Pause"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="HostButton" type="Button" parent="PauseMenu/MarginContainer/VBoxContainer"]
+[node name="ExitButton" type="Button" parent="PauseMenu/MarginContainer/VBoxContainer"]
 layout_mode = 2
 text = "Exit"
+
+[connection signal="pressed" from="PauseMenu/MarginContainer/VBoxContainer/ExitButton" to="." method="_on_exit_button_pressed"]
