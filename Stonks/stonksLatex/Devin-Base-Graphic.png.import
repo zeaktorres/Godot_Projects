@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://56rh30gh5h25"
-path="res://.godot/imported/Devin-Base-Graphic.png-bba500e6ea002daf1f6689bf0d28e202.ctex"
+path="res://.godot/imported/Devin-Base-Graphic.png-839249afbe7c315ee7dc2a25bd18a595.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Devin-Base-Graphic.png"
-dest_files=["res://.godot/imported/Devin-Base-Graphic.png-bba500e6ea002daf1f6689bf0d28e202.ctex"]
+source_file="res://stonksLatex/Devin-Base-Graphic.png"
+dest_files=["res://.godot/imported/Devin-Base-Graphic.png-839249afbe7c315ee7dc2a25bd18a595.ctex"]
 
 [params]
 
