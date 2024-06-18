@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024/Arch Linux) (preloaded format=pdflatex 2024.6.13)  14 JUN 2024 18:49
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024/Arch Linux) (preloaded format=pdflatex 2024.6.13)  15 JUN 2024 14:59
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -158,7 +158,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 14--15
 
  []
 
-[1{/usr/share/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}] [1]
+[1{/usr/share/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}]
 (./stonks.toc
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <7> on input line 2.
@@ -168,40 +168,48 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 \tf@toc=\write3
 \openout3 = `stonks.toc'.
 
- [1
+ [2
+
+] [1]
+Chapter 1.
+[1
 
 ]
-Chapter 1.
-<Devin-Base-Graphic.png, id=21, 1927.2pt x 1084.05pt>
+Chapter 2.
+<Devin-Base-Graphic.png, id=24, 1927.2pt x 1084.05pt>
 File: Devin-Base-Graphic.png Graphic file (type png)
 <use Devin-Base-Graphic.png>
 Package pdftex.def Info: Devin-Base-Graphic.png  used on input line 40.
 (pdftex.def)             Requested size: 1927.19533pt x 1084.04736pt.
 [2
 
-] [3 <./Devin-Base-Graphic.png (PNG copy)>] (./stonks.aux)
+ <./Devin-Base-Graphic.png (PNG copy)>]
+Chapter 3.
+[3
+
+] (./stonks.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-02-20>
  ***********
  ) 
 Here is how much of TeX's memory you used:
- 2455 strings out of 476076
- 40863 string characters out of 5793775
+ 2457 strings out of 476076
+ 40919 string characters out of 5793775
  1928187 words of memory out of 5000000
- 24560 multiletter control sequences out of 15000+600000
+ 24562 multiletter control sequences out of 15000+600000
  563564 words of font info for 54 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 58i,6n,65p,418b,188s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 58i,8n,65p,418b,303s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/
 texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texmf-dist/fon
 ts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texmf-dist/fonts/type1/public
 /amsfonts/cm/cmr12.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cm
 r17.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb>
-Output written on stonks.pdf (6 pages, 2618190 bytes).
+Output written on stonks.pdf (7 pages, 2621914 bytes).
 PDF statistics:
- 55 PDF objects out of 1000 (max. 8388607)
- 33 compressed objects within 1 object stream
+ 60 PDF objects out of 1000 (max. 8388607)
+ 37 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  6 words of extra memory for PDF output out of 10000 (max. 10000000)
 
