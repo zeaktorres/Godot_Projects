@@ -1,11 +1,11 @@
 [gd_scene load_steps=10 format=3 uid="uid://dlwq4kmdb3bhs"]
 
-[ext_resource type="Script" path="res://addons/easy_charts/control_charts/chart.gd" id="1"]
-[ext_resource type="PackedScene" path="res://addons/easy_charts/utilities/containers/data_tooltip/data_tooltip.tscn" id="2"]
-[ext_resource type="Script" path="res://addons/easy_charts/utilities/containers/canvas/canvas.gd" id="3"]
-[ext_resource type="Script" path="res://addons/easy_charts/utilities/containers/canvas/plot_box/plot_box.gd" id="4"]
-[ext_resource type="Script" path="res://addons/easy_charts/utilities/containers/canvas/plot_box/grid_box.gd" id="5"]
-[ext_resource type="PackedScene" path="res://addons/easy_charts/utilities/containers/legend/function_legend.tscn" id="6"]
+[ext_resource type="Script" path="res://addons/easy_charts/control_charts/chart.gd" id="1_k0357"]
+[ext_resource type="Script" path="res://addons/easy_charts/utilities/containers/canvas/canvas.gd" id="2_tydwv"]
+[ext_resource type="Script" path="res://addons/easy_charts/utilities/containers/canvas/plot_box/plot_box.gd" id="3_1xrko"]
+[ext_resource type="Script" path="res://addons/easy_charts/utilities/containers/canvas/plot_box/grid_box.gd" id="4_6liwi"]
+[ext_resource type="PackedScene" path="res://addons/easy_charts/utilities/containers/data_tooltip/data_tooltip.tscn" id="5_p0nig"]
+[ext_resource type="PackedScene" path="res://addons/easy_charts/utilities/containers/legend/function_legend.tscn" id="6_wlkia"]
 
 [sub_resource type="Theme" id="4"]
 
@@ -27,7 +27,7 @@ size_flags_vertical = 3
 mouse_filter = 1
 theme = SubResource("4")
 theme_override_styles/panel = SubResource("8")
-script = ExtResource("1")
+script = ExtResource("1_k0357")
 
 [node name="Canvas" type="PanelContainer" parent="."]
 layout_mode = 2
@@ -35,7 +35,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 mouse_filter = 1
 theme_override_styles/panel = SubResource("5")
-script = ExtResource("3")
+script = ExtResource("2_tydwv")
 
 [node name="CanvasContainer" type="VBoxContainer" parent="Canvas"]
 layout_mode = 2
@@ -68,7 +68,7 @@ clip_contents = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-script = ExtResource("4")
+script = ExtResource("3_1xrko")
 
 [node name="GridBox" type="Control" parent="Canvas/CanvasContainer/DataContainer/PlotContainer/PlotBox"]
 unique_name_in_owner = true
@@ -78,7 +78,7 @@ anchor_bottom = 1.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 mouse_filter = 2
-script = ExtResource("5")
+script = ExtResource("4_6liwi")
 
 [node name="FunctionsBox" type="Control" parent="Canvas/CanvasContainer/DataContainer/PlotContainer/PlotBox"]
 unique_name_in_owner = true
@@ -87,7 +87,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_default_cursor_shape = 3
 
-[node name="Tooltip" parent="Canvas/CanvasContainer/DataContainer/PlotContainer/PlotBox" instance=ExtResource("2")]
+[node name="Tooltip" parent="Canvas/CanvasContainer/DataContainer/PlotContainer/PlotBox" instance=ExtResource("5_p0nig")]
 layout_mode = 0
 offset_left = -67.0
 offset_top = -33.0
@@ -98,7 +98,7 @@ offset_bottom = 30.0
 layout_mode = 2
 text = "{xlabel}"
 
-[node name="FunctionLegend" parent="Canvas/CanvasContainer/DataContainer" instance=ExtResource("6")]
+[node name="FunctionLegend" parent="Canvas/CanvasContainer/DataContainer" instance=ExtResource("6_wlkia")]
 unique_name_in_owner = true
 use_parent_material = true
 layout_mode = 2

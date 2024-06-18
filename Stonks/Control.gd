@@ -1,20 +1,16 @@
 extends Control
+class_name LineChart
 
-@onready var chart: Chart = $VBoxContainer/Chart
+@onready var chartScene = load("res://Scenes/Chart.tscn")
 
 # This Chart will plot 3 different functions
 var f1: Function
+var chart: Chart
 
-func _ready():
-    # Let's create our @x values
-    var x: PackedFloat32Array = ArrayOperations.multiply_float(range(-10, 11, 1), 0.5)
-    
-    # And our y values. It can be an n-size array of arrays.
-    # NOTE: `x.size() == y.size()` or `x.size() == y[n].size()`
-    var y: Array = ArrayOperations.multiply_int(ArrayOperations.cos(x), 20)
-    
-    # Let's customize the chart properties, which specify how the chart
-    # should look, plus some additional elements like labels, the scale, etc...
+func initialize(x: Array[int], y: Array[int]):
+    set_process(false)
+	# Let's customize the chart properties, which specify how the chart
+	# should look, plus some additional elements like labels, the scale, etc...
     var cp: ChartProperties = ChartProperties.new()
     cp.colors.frame = Color("#161a1d")
     cp.colors.background = Color.TRANSPARENT
@@ -29,7 +25,7 @@ func _ready():
     cp.y_scale = 10
     cp.interactive = true # false by default, it allows the chart to create a tooltip to show point values
     # and interecept clicks on the plot
-    
+
     # Let's add values to our functions
     f1 = Function.new(
         x, y, "Stock", # This will create a function with x and y values taken by the Arrays 
@@ -44,28 +40,30 @@ func _ready():
                                             # since it is `NONE`, no marker will be shown.
             type = Function.Type.LINE, 		# This defines what kind of plotting will be used, 
                                             # in this case it will be a Linear Chart.
-            interpolation = Function.Interpolation.STAIR	# Interpolation mode, only used for 
+            interpolation = Function.Interpolation.LINEAR	# Interpolation mode, only used for 
                                                             # Line Charts and Area Charts.
         }
     )
-    
+
+    chart = chartScene.instantiate()
+    add_child(chart)
+
     # Now let's plot our data
     chart.plot([f1], cp)
-    
-    # Uncommenting this line will show how real time data plotting works
-    set_process(false)
 
+    # Uncommenting this line will show how real time data plotting works
+    chart.queue_redraw()
 
 var new_val: float = 4.5
 
 func _process(_delta: float):
-    # This function updates the values of a function and then updates the plot
+	# This function updates the values of a function and then updates the plot
     new_val += 5
-    
-    # we can use the `Function.add_point(x, y)` method to update a function
-    f1.add_point(new_val, cos(new_val) * 20)
-    f1.remove_point(0)
-    chart.queue_redraw() # This will force the Chart to be updated
+	
+	# we can use the `Function.add_point(x, y)` method to update a function
+	#f1.add_point(new_val, cos(new_val) * 20)
+	#f1.remove_point(0)
+	#chart.queue_redraw() # This will force the Chart to be updated
 
 
 func _on_CheckButton_pressed():

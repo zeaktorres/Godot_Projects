@@ -1,0 +1,25 @@
+[gd_scene load_steps=5 format=3 uid="uid://chd7qw0b5xhdh"]
+
+[ext_resource type="Script" path="res://node2D.gd" id="1_njbhi"]
+[ext_resource type="Script" path="res://stockHandler.gd" id="2_i7pa7"]
+[ext_resource type="Script" path="res://Timer.gd" id="3_uglgh"]
+[ext_resource type="PackedScene" uid="uid://chcj7up8k8pa8" path="res://Scenes/Control.tscn" id="4_k7amm"]
+
+[node name="Node2D" type="HBoxContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_njbhi")
+
+[node name="StockHandler" type="Node2D" parent="."]
+script = ExtResource("2_i7pa7")
+
+[node name="GraphTimer" type="Timer" parent="."]
+script = ExtResource("3_uglgh")
+
+[node name="Control2" parent="." instance=ExtResource("4_k7amm")]
+layout_mode = 2
