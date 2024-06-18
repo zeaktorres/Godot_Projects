@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://chd7qw0b5xhdh"]
+[gd_scene load_steps=5 format=3 uid="uid://chd7qw0b5xhdh"]
 
-[ext_resource type="Script" path="res://GraphNode.gd" id="1_3b3ry"]
 [ext_resource type="Script" path="res://Timer.gd" id="2_w5c7f"]
 [ext_resource type="Script" path="res://stockHandler.gd" id="3_5n8pq"]
+[ext_resource type="PackedScene" uid="uid://chcj7up8k8pa8" path="res://addons/easy_charts/examples/line_chart/Control.tscn" id="3_40cw5"]
+[ext_resource type="Script" path="res://Control.gd" id="4_unmdo"]
 
 [node name="Node2D" type="HBoxContainer"]
 anchors_preset = 15
@@ -13,15 +14,13 @@ grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="GraphNode" type="GraphNode" parent="."]
-layout_mode = 2
-offset_right = 1152.0
-offset_bottom = 648.0
-size_flags_horizontal = 3
-script = ExtResource("1_3b3ry")
-
-[node name="GraphTimer" type="Timer" parent="GraphNode"]
-script = ExtResource("2_w5c7f")
-
 [node name="StockHandler" type="Node2D" parent="."]
 script = ExtResource("3_5n8pq")
+
+[node name="GraphTimer" type="Timer" parent="."]
+script = ExtResource("2_w5c7f")
+
+[node name="Control2" parent="." instance=ExtResource("3_40cw5")]
+layout_mode = 2
+size_flags_horizontal = 3
+script = ExtResource("4_unmdo")

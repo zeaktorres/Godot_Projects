@@ -11,12 +11,17 @@ config_version=5
 [application]
 
 config/name="Stonks"
+run/main_scene="res://Stock.tscn"
 config/features=PackedStringArray("4.2", "GL Compatibility")
 config/icon="res://icon.svg"
 
 [debug]
 
 gdscript/warnings/integer_division=0
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/easy_charts/plugin.cfg")
 
 [rendering]
 
