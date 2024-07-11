@@ -3,17 +3,34 @@
 [ext_resource type="Script" path="res://node2D.gd" id="1_njbhi"]
 [ext_resource type="Script" path="res://stockHandler.gd" id="2_i7pa7"]
 [ext_resource type="Script" path="res://Timer.gd" id="3_uglgh"]
-[ext_resource type="PackedScene" uid="uid://chcj7up8k8pa8" path="res://Scenes/Control.tscn" id="4_k7amm"]
 
-[node name="Node2D" type="HBoxContainer"]
+[sub_resource type="LabelSettings" id="LabelSettings_fxcw2"]
+line_spacing = 100.0
+font_size = 50
+
+[node name="Node2D" type="VBoxContainer"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
 script = ExtResource("1_njbhi")
+
+[node name="Control2" type="HBoxContainer" parent="."]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+size_flags_vertical = 3
+alignment = 1
+
+[node name="Label" type="Label" parent="Control2"]
+layout_mode = 2
+text = "$325"
+label_settings = SubResource("LabelSettings_fxcw2")
+
+[node name="GraphContainer" type="Control" parent="."]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 18.0
 
 [node name="StockHandler" type="Node2D" parent="."]
 script = ExtResource("2_i7pa7")
@@ -21,5 +38,18 @@ script = ExtResource("2_i7pa7")
 [node name="GraphTimer" type="Timer" parent="."]
 script = ExtResource("3_uglgh")
 
-[node name="Control2" parent="." instance=ExtResource("4_k7amm")]
+[node name="Control" type="HBoxContainer" parent="."]
+custom_minimum_size = Vector2(30, 30)
 layout_mode = 2
+size_flags_vertical = 3
+
+[node name="BUY" type="Button" parent="Control"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "BUY"
+
+[node name="SELL" type="Button" parent="Control"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "SELL
+"

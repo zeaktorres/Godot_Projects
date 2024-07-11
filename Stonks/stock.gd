@@ -5,16 +5,16 @@ var tracker: Array = []
 var name: String
 
 func calculateValue(newSoldValue: int):
-    recentSells.append(newSoldValue)
-    recentSells.sort()
-    var medianPlace: int = int(len(recentSells) / 2)
-    value = recentSells[medianPlace]
+	recentSells.append(newSoldValue)
+	recentSells.sort()
+	var medianPlace: int = int(len(recentSells) / 2)
+	value = recentSells[medianPlace]
 
 func saveValueAtTime():
-    tracker.append(ValueAndTime.new(value, Time.get_ticks_msec()))
+	tracker.append(ValueAndTime.new(value, Time.get_ticks_msec()))
 
 func _ready(soldStock: Signal):
-    soldStock.connect(calculateValue)
+	soldStock.connect(calculateValue)
 
 func _init(newName: String):
-    name = newName
+	name = newName
