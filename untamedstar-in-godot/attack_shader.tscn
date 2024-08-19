@@ -1,0 +1,135 @@
+[gd_scene load_steps=8 format=3 uid="uid://40ptvq52jojl"]
+
+[ext_resource type="Material" uid="uid://dne3geaplo1yw" path="res://Red_Path.tres" id="2_xbcop"]
+[ext_resource type="Script" path="res://curve_path.gd" id="3_br1cv"]
+
+[sub_resource type="PrismMesh" id="PrismMesh_t48jp"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2r2n8"]
+transparency = 1
+albedo_color = Color(0.294118, 0.509804, 1, 0.321569)
+
+[sub_resource type="GDScript" id="GDScript_3mnis"]
+script/source = "extends CSGMesh3D
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	pass
+	
+"
+
+[sub_resource type="Curve3D" id="Curve3D_u6anc"]
+bake_interval = 512.0
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, -2.42466, -2.52128e-05, 0.468376, 0, 0, 0, 0, 0, 0, -1.12281, -2.52128e-05, 0.245452, 0, 0, 0, 0, 0, 0, -9.22084e-05, -2.52128e-05, 0.189737, 0, 0, 0, 0, 0, 0, 1.44073, -2.52128e-05, 0.295418, 0, 0, 0, 0, 0, 0, 2.39646, 3.24249e-05, 0.481137),
+"tilts": PackedFloat32Array(0, 0, 0, 0, 0)
+}
+point_count = 5
+
+[sub_resource type="Curve3D" id="Curve3D_2i8gs"]
+bake_interval = 512.0
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, -1.20106, -2.52128e-05, 0.468376, 0, 0, 0, 0, 0, 0, -0.610136, -2.52128e-05, 0.245452, 0, 0, 0, 0, 0, 0, -9.22084e-05, -2.52128e-05, 0.189737, 0, 0, 0, 0, 0, 0, 0.651137, -2.52128e-05, 0.295418, 0, 0, 0, 0, 0, 0, 1.16763, 3.24249e-05, 0.481137),
+"tilts": PackedFloat32Array(0, 0, 0, 0, 0)
+}
+point_count = 5
+
+[node name="Node3D" type="Node3D"]
+
+[node name="Floor" type="CSGCombiner3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.000914335, -0.000626862, -0.001019)
+
+[node name="CSGMesh3D" type="CSGMesh3D" parent="Floor"]
+transform = Transform3D(5, 0, 0, 0, -4.37114e-07, -0.016, 0, 10, -6.99382e-10, 0, 0, 0.099)
+mesh = SubResource("PrismMesh_t48jp")
+material = SubResource("StandardMaterial3D_2r2n8")
+script = SubResource("GDScript_3mnis")
+
+[node name="SubtractingBox" type="CSGBox3D" parent="Floor/CSGMesh3D"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37121e-08, 0.00115287, 0.270579, -0.192893)
+operation = 2
+size = Vector3(1, 1.38757, 0.461792)
+
+[node name="SubtractingBox2" type="CSGBox3D" parent="Floor/CSGMesh3D"]
+transform = Transform3D(1, 0, 0, 0, -1, -8.74164e-08, 0, 9.21318e-08, -0.999998, -0.470426, -0.509453, -2.59712)
+operation = 2
+size = Vector3(0.29071, 0.0602949, 27.8136)
+
+[node name="SubtractingBox3" type="CSGBox3D" parent="Floor/CSGMesh3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 1.74833e-07, 0, -1.84276e-07, 0.999998, -0.275437, -0.508695, -3.52326)
+operation = 2
+size = Vector3(0.120941, 0.0335654, 17.4258)
+
+[node name="SubtractingBox4" type="CSGBox3D" parent="Floor/CSGMesh3D"]
+transform = Transform3D(0.999999, 0, 0, 0, -0.999999, -2.62249e-07, 0, 2.77974e-07, -0.999996, 0.365021, -0.514318, -4.32158)
+operation = 2
+size = Vector3(0.207443, 0.0584678, 31.4112)
+
+[node name="SubtractingBox5" type="CSGBox3D" parent="Floor/CSGMesh3D"]
+transform = Transform3D(0.999999, 0, 0, 0, 0.999999, 3.49665e-07, 0, -3.68573e-07, 0.999996, 0.480792, -0.493908, -7.04652)
+operation = 2
+size = Vector3(0.120941, 0.0335654, 17.4258)
+
+[node name="Curve" type="Node3D" parent="." node_paths=PackedStringArray("endPath", "startPath", "startPathPolygon", "endPathPolygon")]
+script = ExtResource("3_br1cv")
+endPath = NodePath("EndPath")
+startPath = NodePath("StartPath")
+startPathPolygon = NodePath("StartPathPolygon")
+endPathPolygon = NodePath("EndPathPolygon")
+maxTime = 1.0
+
+[node name="EndPath" type="Path3D" parent="Curve"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.015, -5.131)
+curve = SubResource("Curve3D_u6anc")
+
+[node name="PathFollow3D" type="PathFollow3D" parent="Curve/EndPath"]
+transform = Transform3D(0.168776, 0, -0.985635, 0, 1, 0, 0.985635, 0, 0.168776, -2.42466, -2.52128e-05, 0.468376)
+
+[node name="StartPath" type="Path3D" parent="Curve"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.01, 0.015, -0.102)
+curve = SubResource("Curve3D_2i8gs")
+
+[node name="PathFollow3D" type="PathFollow3D" parent="Curve/StartPath"]
+transform = Transform3D(0.352957, 0, -0.935615, 0, 1, 0, 0.935615, 0, 0.352957, -1.20106, -2.52128e-05, 0.468376)
+
+[node name="StartPathPolygon" type="CSGPolygon3D" parent="Curve"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.000138044, 0, -0.00250691)
+material_override = ExtResource("2_xbcop")
+polygon = PackedVector2Array(0, 0, 0, 0.1, 0.1, 0.1, 0.1, 0)
+mode = 2
+path_node = NodePath("../StartPath")
+path_interval_type = 0
+path_interval = 0.13
+path_simplify_angle = 0.0
+path_rotation = 2
+path_local = false
+path_continuous_u = true
+path_u_distance = 1.0
+path_joined = false
+
+[node name="EndPathPolygon" type="CSGPolygon3D" parent="Curve"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.000138044, 0, -0.00250691)
+material_override = ExtResource("2_xbcop")
+polygon = PackedVector2Array(0, 0, 0, 0.1, 0.1, 0.1, 0.1, 0)
+mode = 2
+path_node = NodePath("../EndPath")
+path_interval_type = 0
+path_interval = 0.13
+path_simplify_angle = 0.0
+path_rotation = 2
+path_local = false
+path_continuous_u = true
+path_u_distance = 1.0
+path_joined = false
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 8.73433, -1.27024)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 7, -2)
