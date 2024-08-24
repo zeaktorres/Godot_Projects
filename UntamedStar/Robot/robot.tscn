@@ -1,0 +1,54 @@
+[gd_scene load_steps=10 format=3 uid="uid://ho5cnhsw2vrk"]
+
+[ext_resource type="Script" path="res://Robot/Player.gd" id="1_7062m"]
+[ext_resource type="Script" path="res://Robot/frontTargetPivot.gd" id="2_8cljb"]
+[ext_resource type="Script" path="res://Robot/pivot.gd" id="2_yt72u"]
+[ext_resource type="PackedScene" uid="uid://hswdxq5e86xw" path="res://RobotArmature.tscn" id="3_cf7t6"]
+[ext_resource type="Script" path="res://Robot/target.gd" id="4_7cwe4"]
+[ext_resource type="Script" path="res://Robot/Camera_Follow.gd" id="4_v3euo"]
+[ext_resource type="Script" path="res://Robot/frontTarget.gd" id="6_85qk4"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_ovmpw"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_y0wbg"]
+radius = 1.0
+height = 4.0
+
+[node name="Robot" type="CharacterBody3D" node_paths=PackedStringArray("pivot", "target", "frontTarget")]
+script = ExtResource("1_7062m")
+speed = 25
+pivot = NodePath("Pivot")
+target = NodePath("Pivot/Target")
+frontTarget = NodePath("FrontTargetPivot/Front")
+
+[node name="FrontTargetPivot" type="Node3D" parent="."]
+script = ExtResource("2_8cljb")
+
+[node name="Front" type="MeshInstance3D" parent="FrontTargetPivot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -9)
+mesh = SubResource("BoxMesh_ovmpw")
+skeleton = NodePath("../../Pivot")
+script = ExtResource("6_85qk4")
+
+[node name="Pivot" type="Node3D" parent="."]
+script = ExtResource("2_yt72u")
+
+[node name="Robot" parent="Pivot" instance=ExtResource("3_cf7t6")]
+
+[node name="Target" type="Node3D" parent="Pivot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.611538, 3.30831, 0.290241)
+script = ExtResource("4_7cwe4")
+
+[node name="Camera3D" type="Camera3D" parent="Pivot/Target" node_paths=PackedStringArray("cameraTarget", "frontTargetPivot")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.9, 4.5449)
+fov = 100.0
+script = ExtResource("4_v3euo")
+distance = 12.0
+height = 7.2
+cameraTarget = NodePath("..")
+frontTargetPivot = NodePath("../../../FrontTargetPivot")
+turnSpeed = 1.5
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.11359, 0)
+shape = SubResource("CapsuleShape3D_y0wbg")

@@ -3,6 +3,8 @@
 
 # Godot-specific ignores
 .import/
+UntamedStar/NatureScene/
+UntamedStar/Grid_Textures
 export.cfg
 export_presets.cfg
 
