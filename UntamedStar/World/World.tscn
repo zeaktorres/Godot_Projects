@@ -1,10 +1,14 @@
-[gd_scene load_steps=4 format=3 uid="uid://q7iuob7xpnht"]
+[gd_scene load_steps=6 format=3 uid="uid://q7iuob7xpnht"]
 
-[ext_resource type="Texture2D" uid="uid://u01tbyxo4hrl" path="res://Grid_Textures/PNG/Orange/texture_03.png" id="1_16vvi"]
+[ext_resource type="Texture2D" uid="uid://cqoj5ln2cvmrn" path="res://Grid_Textures/PNG/Dark/texture_01.png" id="1_1fuo0"]
+[ext_resource type="Texture2D" uid="uid://k0laqhvum3sl" path="res://Grid_Textures/PNG/Orange/texture_01.png" id="2_bu7m2"]
 [ext_resource type="PackedScene" uid="uid://ho5cnhsw2vrk" path="res://Robot/robot.tscn" id="2_e4cy6"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3p7hi"]
-albedo_texture = ExtResource("1_16vvi")
+albedo_texture = ExtResource("1_1fuo0")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_r5fy8"]
+albedo_texture = ExtResource("2_bu7m2")
 
 [node name="World" type="Node3D"]
 
@@ -18,6 +22,7 @@ material = SubResource("StandardMaterial3D_3p7hi")
 [node name="Pillar" type="CSGBox3D" parent="Floor"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 7.5, 23)
 size = Vector3(5, 12, 5)
+material = SubResource("StandardMaterial3D_r5fy8")
 
 [node name="Robot" parent="." instance=ExtResource("2_e4cy6")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.782379, 0)

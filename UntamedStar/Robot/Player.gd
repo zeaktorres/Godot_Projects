@@ -12,13 +12,9 @@ extends CharacterBody3D
 var target_velocity = Vector3.ZERO
 var direction = Vector3.ZERO
 
-
 func _physics_process(delta):
 	# Get the input direction and handle the movement/deceleration.
 	var input_dir = Input.get_vector("left", "right", "forward", "down") * -1
-	#var look_at_direction = Vector3(input_dir.x, 0, input_dir.y).normalized()
-	#direction = direction.lerp(look_at_direction.normalized(), delta * 2)
-	#var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	direction = global_position.direction_to(frontTarget.global_position) 
 	direction = direction.normalized()
 	pivot.look_at(frontTarget.global_position, Vector3.UP)
@@ -41,19 +37,3 @@ func _physics_process(delta):
 	
 	# Moving the Character
 	move_and_slide()
-
-#func _physics_process(delta: float) -> void:
-	#look_at(target.position, Vector3.UP)
-	#if is_on_floor():
-		#if direction:
-			#velocity.x = direction.x * speed
-			#velocity.z = direction.z * speed
-		#else:
-			#velocity.x = lerp(velocity.x, direction.x * speed, delta * 7.0)
-			#velocity.z = lerp(velocity.z, direction.z * speed, delta * 7.0)
-	#if (velocity.length() > 0):
-		#animationPlayer.play("Walk")
-	#else:
-		#animationPlayer.play("Idle")
-	#move_and_slide()
-	#pass

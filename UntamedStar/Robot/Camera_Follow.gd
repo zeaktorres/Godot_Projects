@@ -5,7 +5,7 @@ extends Camera3D
 @export var cameraTarget: Target
 @export var frontTargetPivot: FrontTargetPivot
 @export var turnSpeed: float
-@onready var animationPlayer: AnimationPlayer = get_node("/root/World/Robot/Pivot/Robot/AnimationPlayer")
+@onready var animationPlayer: AnimationPlayer = get_tree().get_current_scene().find_child("AnimationPlayer")
 
 # Called when the node enters the scene tree for the first time.ww
 func _ready():
