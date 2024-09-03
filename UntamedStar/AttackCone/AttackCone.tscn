@@ -105,13 +105,13 @@ path_interval_type = 0
 path_interval = 0.13
 path_simplify_angle = 0.0
 path_rotation = 2
-path_local = false
+path_local = true
 path_continuous_u = true
 path_u_distance = 1.0
 path_joined = false
 
 [node name="EndPathPolygon" type="CSGPolygon3D" parent="Curve"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0334945, 0, -0.0448771)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0334945, 0, -5.16037)
 material_override = ExtResource("2_26ck5")
 polygon = PackedVector2Array(0, 0, 0, 0.07, 0.2, 0.01, 0.53, 0)
 mode = 2
@@ -120,7 +120,7 @@ path_interval_type = 0
 path_interval = 0.13
 path_simplify_angle = 0.0
 path_rotation = 2
-path_local = false
+path_local = true
 path_continuous_u = true
 path_u_distance = 1.0
 path_joined = false
