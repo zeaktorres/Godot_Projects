@@ -1,9 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://40ptvq52jojl"]
+[gd_scene load_steps=10 format=3 uid="uid://40ptvq52jojl"]
 
 [ext_resource type="Script" path="res://AttackCone/AttackCone.gd" id="1_7tpaa"]
 [ext_resource type="Material" uid="uid://cuquj3d5ecvkl" path="res://AttackCone/floor.tres" id="2_26ck5"]
 [ext_resource type="Script" path="res://AttackCone/CurvePath.gd" id="3_sxfbv"]
 [ext_resource type="Material" uid="uid://dne3geaplo1yw" path="res://AttackCone/Red_Path.tres" id="4_tu8ac"]
+[ext_resource type="Script" path="res://AttackCone/StartPathPolygon3D.gd" id="5_54mwx"]
 
 [sub_resource type="PrismMesh" id="PrismMesh_t48jp"]
 
@@ -76,10 +77,11 @@ transform = Transform3D(0.999999, 0, 0, 0, 0.999999, 3.49665e-07, 0, -3.68573e-0
 operation = 2
 size = Vector3(0.120941, 0.0335654, 17.4258)
 
-[node name="Curve" type="Node3D" parent="." node_paths=PackedStringArray("endPath", "startPath")]
+[node name="Curve" type="Node3D" parent="." node_paths=PackedStringArray("endPath", "startPath", "startPathPolygon")]
 script = ExtResource("3_sxfbv")
 endPath = NodePath("EndPath")
 startPath = NodePath("StartPath")
+startPathPolygon = NodePath("StartPathPolygon")
 
 [node name="EndPath" type="Path3D" parent="Curve"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0331269, -5.131)
@@ -109,6 +111,7 @@ path_local = true
 path_continuous_u = true
 path_u_distance = 1.0
 path_joined = false
+script = ExtResource("5_54mwx")
 
 [node name="EndPathPolygon" type="CSGPolygon3D" parent="Curve"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0334945, 0, -5.16037)

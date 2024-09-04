@@ -27,6 +27,7 @@ script = ExtResource("2_8cljb")
 
 [node name="Front" type="MeshInstance3D" parent="FrontTargetPivot"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -9)
+visible = false
 mesh = SubResource("BoxMesh_ovmpw")
 skeleton = NodePath("../../Pivot")
 script = ExtResource("6_85qk4")

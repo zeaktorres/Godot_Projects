@@ -3,6 +3,7 @@ class_name CurveNode
 signal Finished
 @export var endPath: Path3D
 @export var startPath: Path3D
+@export var startPathPolygon: StartPathPolygon3D
 @onready var pathPointClass = load("res://AttackCone/PathPoint.gd")
 @onready var isProcessing: Mutex = Mutex.new()
 @onready var numberOfThreadsLeft = 0
@@ -34,6 +35,11 @@ func init(timeInSeconds: float):
 		tweens.append(newTween)
 		numberOfThreadsLeft += 1 
 	
+	var startPathPolygonTween = create_tween()
+	startPathPolygonTween.pause()
+	startPathPolygonTween.tween_property(startPathPolygon, "position:z", -5.15, timeInSeconds)
+	tweens.append(startPathPolygonTween)
+	
 func onFinish():
 	isProcessing.lock()
 	if numberOfThreadsLeft > 1:
@@ -52,8 +58,11 @@ func _physics_process(_delta: float) -> void:
 
 func movePathForward():
 	updatePathsPointsToTweenValue()
+	#startPathPolygon.global_position.z += -0.1
 	
 func updatePathsPointsToTweenValue():
+	#startPathPolygon.position.z = -5.2
 	for i in range(pathPointObjects.size()):
+		#print(startPathPolygon.global_position.distance_to(pathPointObjects[i].position))
 		startPath.curve.set_point_position(i, pathPointObjects[i].position)
 	
