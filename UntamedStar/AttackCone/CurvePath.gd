@@ -5,11 +5,11 @@ signal Finished
 @export var startPath: Path3D
 @export var startPathPolygon: StartPathPolygon3D
 @onready var pathPointClass = load("res://AttackCone/PathPoint.gd")
-@onready var isProcessing: Mutex = Mutex.new()
+@onready	 var isProcessing: Mutex = Mutex.new()
 @onready var numberOfThreadsLeft = 0
 var pathPointObjects: Array[PathPoint]
+var originalPathPoints: Array[PathPoint]
 var tweens: Array[Tween] = []
-	
 
 func play():
 	for tween: Tween in tweens:
@@ -26,7 +26,10 @@ func init(timeInSeconds: float):
 	pathPointObjects = []
 	for i in range(startPath.curve.get_baked_points().size()):
 		pathPointObjects.append(pathPointClass.new())
+		originalPathPoints.append(pathPointClass.new())
 		pathPointObjects[i].position = startPath.curve.get_point_position(i)
+		originalPathPoints[i].position = startPath.curve.get_point_position(i)
+		
 		var newTween = create_tween()
 		var endPathPoint: Vector3 = endPath.curve.get_point_position(i)
 		newTween.pause()
@@ -38,16 +41,20 @@ func init(timeInSeconds: float):
 	var startPathPolygonTween = create_tween()
 	startPathPolygonTween.pause()
 	startPathPolygonTween.tween_property(startPathPolygon, "position:z", -5.15, timeInSeconds)
+	startPathPolygonTween.tween_callback(onFinish)
 	tweens.append(startPathPolygonTween)
+	numberOfThreadsLeft += 1 
 	
 func onFinish():
+	
 	isProcessing.lock()
 	if numberOfThreadsLeft > 1:
 		numberOfThreadsLeft -= 1
 		isProcessing.unlock()
 		return
-			
 	
+	for i in range(originalPathPoints.size()):
+		startPath.curve.set_point_position(i, originalPathPoints[i].position)
 	emit_signal("Finished")
 	pass
 	
@@ -58,11 +65,8 @@ func _physics_process(_delta: float) -> void:
 
 func movePathForward():
 	updatePathsPointsToTweenValue()
-	#startPathPolygon.global_position.z += -0.1
 	
 func updatePathsPointsToTweenValue():
-	#startPathPolygon.position.z = -5.2
 	for i in range(pathPointObjects.size()):
-		#print(startPathPolygon.global_position.distance_to(pathPointObjects[i].position))
 		startPath.curve.set_point_position(i, pathPointObjects[i].position)
 	

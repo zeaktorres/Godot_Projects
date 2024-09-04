@@ -1,9 +1,12 @@
 extends Node3D
+class_name AttackCone
 
 @export var curve: CurveNode
+signal Finished
+signal Ready
 
 func _ready() -> void:
-	play(1.5)
+	emit_signal("Ready")
 
 func play(timeInSeconds: float):
 	curve.init(timeInSeconds)

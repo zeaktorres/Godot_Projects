@@ -464,11 +464,11 @@ tracks/41/keys = PackedFloat32Array(0, 1, -0.787847, 1.05808, 1.70949)
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ptg0w"]
 _data = {
 "Idle": ExtResource("17_kv0w0"),
+"Punch": ExtResource("20_hh1tw"),
 "Robot_Dance": ExtResource("15_vi7py"),
 "Robot_Death": ExtResource("16_tko8c"),
 "Robot_Jump": ExtResource("18_2nybn"),
 "Robot_No": ExtResource("19_7vbg1"),
-"Robot_Punch": ExtResource("20_hh1tw"),
 "Robot_Running": ExtResource("21_mby7u"),
 "Robot_Sitting": ExtResource("22_g4g18"),
 "Robot_Standing": ExtResource("23_luisb"),
@@ -792,7 +792,7 @@ bones/43/parent = 42
 bones/43/rest = Transform3D(1, 1.57482e-07, 2.4274e-07, -5.94661e-08, 0.932863, -0.360232, -2.83173e-07, 0.360232, 0.932863, 3.98206e-08, 0.611007, -8.81869e-10)
 bones/43/enabled = true
 bones/43/position = Vector3(3.98206e-08, 0.611007, -8.81869e-10)
-bones/43/rotation = Quaternion(0.277154, 1.27992e-07, -7.25923e-08, 0.960825)
+bones/43/rotation = Quaternion(0.277154, 1.27992e-07, -7.25922e-08, 0.960825)
 bones/43/scale = Vector3(1, 1, 1)
 bones/44/name = "LowerLeg.L_2"
 bones/44/parent = 43

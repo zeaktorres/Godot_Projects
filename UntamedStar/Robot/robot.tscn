@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://ho5cnhsw2vrk"]
+[gd_scene load_steps=10 format=3 uid="uid://ho5cnhsw2vrk"]
 
 [ext_resource type="Script" path="res://Robot/Player.gd" id="1_7062m"]
 [ext_resource type="Script" path="res://Robot/frontTargetPivot.gd" id="2_8cljb"]
@@ -7,7 +7,6 @@
 [ext_resource type="Script" path="res://Robot/target.gd" id="4_7cwe4"]
 [ext_resource type="Script" path="res://Robot/Camera_Follow.gd" id="4_v3euo"]
 [ext_resource type="Script" path="res://Robot/frontTarget.gd" id="6_85qk4"]
-[ext_resource type="PackedScene" uid="uid://40ptvq52jojl" path="res://AttackCone/AttackCone.tscn" id="8_u61a1"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_ovmpw"]
 
@@ -50,9 +49,6 @@ height = 7.2
 cameraTarget = NodePath("..")
 frontTargetPivot = NodePath("../../../FrontTargetPivot")
 turnSpeed = 1.5
-
-[node name="AttackCone" parent="Pivot" instance=ExtResource("8_u61a1")]
-transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, -2)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.11359, 0)

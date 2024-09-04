@@ -21,7 +21,6 @@ func _physics_process(delta):
 		frontTargetPivot.rotate_y(deg_to_rad(Input.get_last_mouse_velocity()[0] / 800) * -1)
 	if input_dir.x * input_dir.x > 0:
 		frontTargetPivot.rotate_y(deg_to_rad(input_dir.x * turnSpeed))
-		animationPlayer.play("Walk")
 		
 	
 	var target = get_parent_node_3d().global_transform.origin
