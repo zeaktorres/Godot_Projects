@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=3 uid="uid://bewsquq16vb5k"]
+
+[ext_resource type="Script" path="res://Scripts/pellet.gd" id="1_llrq8"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_m0cai"]
+velocity_pivot = Vector3(-1, 1, 0)
+spread = 0.0
+initial_velocity_min = 100.0
+initial_velocity_max = 100.0
+gravity = Vector3(0, 0, 0)
+collision_mode = 2
+collision_use_scale = true
+
+[sub_resource type="SphereMesh" id="SphereMesh_jew4p"]
+radius = 0.1
+height = 0.2
+
+[node name="Pellet" type="GPUParticles3D"]
+transform = Transform3D(-1, 0, 1.50996e-07, 0, 1, 0, -1.50996e-07, 0, -1, 0, 0, 0)
+emitting = false
+amount = 1
+lifetime = 5.0
+one_shot = true
+collision_base_size = 1.0
+process_material = SubResource("ParticleProcessMaterial_m0cai")
+draw_pass_1 = SubResource("SphereMesh_jew4p")
+script = ExtResource("1_llrq8")

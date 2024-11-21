@@ -1,0 +1,51 @@
+[gd_scene load_steps=7 format=3 uid="uid://dejdswh8l8tlr"]
+
+[ext_resource type="Texture2D" uid="uid://k0laqhvum3sl" path="res://Grid_Textures/PNG/Orange/texture_01.png" id="1_077qi"]
+[ext_resource type="Script" path="res://Scripts/world.gd" id="1_qntld"]
+[ext_resource type="PackedScene" uid="uid://du7g23gs1qxrt" path="res://Scenes/main_menu.tscn" id="3_hscsy"]
+[ext_resource type="PackedScene" uid="uid://bit1wvdvf3byp" path="res://Scenes/pause.tscn" id="4_fjd8n"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_278ad"]
+albedo_texture = ExtResource("1_077qi")
+ao_enabled = true
+uv1_triplanar = true
+uv1_world_triplanar = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qn0pe"]
+
+[node name="World" type="Node3D"]
+script = ExtResource("1_qntld")
+
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="."]
+use_collision = true
+collision_layer = 4
+collision_mask = 4
+
+[node name="Floor" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.253174, 0, 0)
+size = Vector3(20, 1, 20)
+material = SubResource("StandardMaterial3D_278ad")
+
+[node name="Column" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+size = Vector3(1, 2, 1)
+material = SubResource("StandardMaterial3D_qn0pe")
+
+[node name="GPUParticlesCollisionBox3D" type="GPUParticlesCollisionBox3D" parent="CSGCombiner3D/Column"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.05)
+size = Vector3(1, 2, 1.1)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.965926, 2.87868e-08, -0.258819, -0.224144, 0.5, 0.836516, 0.12941, 0.866026, -0.482963, -11, 9, -7)
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("res://Scenes/player.tscn")
+spawn_path = NodePath("..")
+
+[node name="MainMenu" parent="." instance=ExtResource("3_hscsy")]
+
+[node name="Pause" parent="." instance=ExtResource("4_fjd8n")]
+
+[connection signal="hostButtonPressed" from="MainMenu" to="." method="_on_host_button_pressed"]
+[connection signal="joinButtonPressed" from="MainMenu" to="." method="_on_join_button_pressed"]
+[connection signal="exitButton" from="Pause" to="." method="_on_pause_exit_button"]
